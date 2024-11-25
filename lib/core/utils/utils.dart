@@ -8,3 +8,4 @@ export 'shared_prefs.dart';
 export 'text_style_constants.dart'; 
 export 'typography_constants.dart'; 
 export 'validator.dart'; 
+export 'app_dimesnions.dart';

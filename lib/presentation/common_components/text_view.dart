@@ -36,7 +36,7 @@ class TextView extends StatelessWidget {
         required this.title,
         this.margin = EdgeInsets.zero,
         this.padding = EdgeInsets.zero,
-        this.fontSize = 13,
+        this.fontSize = 16,
         this.backgroundColor = Colors.transparent,
         this.fontWeight = FontWeight.normal,
         this.wordSpacing = 1.0,

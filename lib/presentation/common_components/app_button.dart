@@ -18,13 +18,13 @@ class AppButton extends StatelessWidget {
   final Widget? child;
 
   const AppButton(
-      {Key? key,
-        this.height,
+      {super.key,
+        this.height = 48,
         this.width = double.infinity,
         required this.title,
         this.margin =
-        const EdgeInsets.only(top: 24, bottom: 24, left: 20, right: 20),
-        this.padding = const EdgeInsets.only(bottom: 10),
+         EdgeInsets.zero,
+        this.padding =  EdgeInsets.zero,
         required this.onPressed,
         this.buttonBackgroundColor,
         this.child,
@@ -32,8 +32,7 @@ class AppButton extends StatelessWidget {
         this.textFontSize = 16,
         this.textColor = Colors.white,
         this.textFontFamily,
-        this.fontWeight = FontWeight.w600})
-      : super(key: key);
+        this.fontWeight = FontWeight.w600});
 
   @override
   Widget build(BuildContext context) {
