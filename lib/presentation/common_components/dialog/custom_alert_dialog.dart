@@ -44,6 +44,7 @@ class CustomAlertDialog extends StatelessWidget {
               title: title,
               fontSize: 17,
               fontFamily: '',
+
             ),
             // const SizedBox(height: 15),
             // TextView(

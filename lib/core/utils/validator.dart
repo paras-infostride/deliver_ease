@@ -117,8 +117,8 @@ class Validator {
 
   // ignore: prefer_function_declarations_over_variables
   static Function validateMobileNo = (String? input) {
-    if (input == null || input.trim().length != 10) {
-      return "Mobile Number must be of 10 digit";
+    if (input == null || input.trim().length != 13) {
+      return "Invalid Mobile Number";
     } else {
       return null;
     }

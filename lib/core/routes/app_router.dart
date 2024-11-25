@@ -2,7 +2,7 @@ import 'package:deliver_ease/core/routes/redirect_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/features/authentication/login_screen.dart';
+import '../../presentation/features/authentication/login/login_screen.dart';
 import 'app_router_observer.dart';
 import 'app_routes_name.dart';
 
