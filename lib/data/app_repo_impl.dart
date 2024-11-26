@@ -5,6 +5,8 @@ import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'exceptions_string_constants.dart';
+
 
 class AppRepoImpl implements AppRepo
 {
@@ -37,6 +39,7 @@ class AppRepoImpl implements AppRepo
     }
   }
 
+
   @override
   Future<bool> checkUserExist(String userID) async {
     try {
@@ -51,7 +54,34 @@ class AppRepoImpl implements AppRepo
     }  catch (e) {
       rethrow;
     }
+  }
+
+  @override
+  Future<UserProfile> fetchUserDetail(String userID) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
+
+      final QuerySnapshot<Object?> res = await userCollection
+          .where(FirebaseStrings.userIdKey, isEqualTo: userID)
+          .get();
+      List<UserProfile> list = [];
+      if (res.docs.isNotEmpty) {
+        for (int i = 0; i < res.docs.length; i++) {
+          Map<String, dynamic> fetchDoc =
+          res.docs[i].data() as Map<String, dynamic>;
+          list.add(UserProfile.fromJson(fetchDoc));
+        }
+        return list.first;
+      } else {
+        throw ExceptionStrings.noDataFound;
+      }
+
+    }  catch (e) {
+      rethrow;
+    }
 
   }
+
 
 }

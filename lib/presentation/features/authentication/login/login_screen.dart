@@ -99,6 +99,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             AppTextField(
               context: context,
               onChanged: (String value) {},
+              onSubmitted: (String value)
+              {
+                if (_formKey.currentState!.validate()) {
+                  ref.read(loginControllerProvider.notifier).submitPhoneNumber(phoneNumber: _textEditingController.text);
+                }
+              },
               headingText: "Phone Number",
                maxLimit: 13,
               keyboard: TextInputType.number,

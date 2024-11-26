@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/features/authentication/login/login_screen.dart';
+import '../../presentation/features/dashboard/dashboard_screen.dart';
 import 'app_router_observer.dart';
 import 'app_routes_name.dart';
 
@@ -19,13 +20,13 @@ class AppRouter {
     },
     debugLogDiagnostics: true,
     // navigatorKey: parentNavigatorKey,
-    initialLocation: '/login',
+    initialLocation: '/dashboard',
     routes: [
 
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginScreen(),
-        // redirect: RedirectUtil.redirectForAuth,
+        redirect: RedirectUtil.redirect,
       ),
 
       GoRoute(
@@ -37,8 +38,14 @@ class AppRouter {
             verificationID: extra['verificationID']
           );
         },
+        // redirect: RedirectUtil.redirect,
+      ),
 
-        // redirect: RedirectUtil.redirectForAuth,
+      GoRoute(
+        path: '/dashboard',
+        name: AppRoutesName.dashboardScreen,
+        builder: (context, state) => const DashboardScreen(),
+        redirect: RedirectUtil.redirect,
       ),
 
     ],

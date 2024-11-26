@@ -1,22 +1,18 @@
+import 'package:deliver_ease/core/routes/app_routes_name.dart';
 import 'package:deliver_ease/core/utils/app_colors.dart';
 import 'package:deliver_ease/core/utils/list_utility.dart';
 import 'package:deliver_ease/core/utils/responsive_util.dart';
 import 'package:deliver_ease/core/utils/app_dimesnions.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
 import 'package:deliver_ease/presentation/common_components/app_button.dart';
-import 'package:deliver_ease/presentation/common_components/app_text_fields.dart';
 import 'package:deliver_ease/presentation/common_components/custom_app_bar.dart';
 import 'package:deliver_ease/presentation/common_components/text_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../common_components/dialog/custom_alert_dialog.dart';
 import '../../../common_components/dialog/info_dialog.dart';
-import '../login/login_controller.dart';
 import 'package:pinput/pinput.dart';
-
 import 'otp_verify_controller.dart';
-
+import 'package:go_router/go_router.dart';
 
 
 class OtpVerifyScreen extends ConsumerStatefulWidget {
@@ -81,8 +77,7 @@ class _OtpVerifyScreenState extends ConsumerState<OtpVerifyScreen> {
 
       if(prev != next  && next.apiTriggerSuccess == true)
       {
-        //TODO Navigate to OTP screen
-
+        context.pushReplacementNamed(AppRoutesName.dashboardScreen);
       }
 
     });

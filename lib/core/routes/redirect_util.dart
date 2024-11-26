@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/shared_prefs.dart';
 
@@ -32,42 +33,25 @@ class RedirectUtil {
     }
   }
 
-  static Future<String> redirectForAuth(
+  static Future<String?> redirect(
       BuildContext context, GoRouterState state) async {
+
     debugPrint("redirect for auth working");
-    bool userAuthenticated = true;
-    // PreferenceManager.getBool(SharedPreferencesKey.userAuthenticatedId);
-    bool userHadReadTheTestInstructions = true;
-    // PreferenceManager.getBool(SharedPreferencesKey.userReadTheInstruction);
-    bool userCompletedTheTest = true;
-    // PreferenceManager.getBool(SharedPreferencesKey.userCompletedTheTest);
+    SharedPreferences sharedPreferences =  await SharedPreferences.getInstance();
 
+    bool userAuthenticated = sharedPreferences.getBool(SharedPreferencesKey.isLogin) ?? false;
+    // bool isOTPVerified = sharedPreferences.getBool(SharedPreferencesKey.isOTPVerified) ?? false;
     debugPrint("userAuthenticated $userAuthenticated");
-    debugPrint(
-        "userHadReadTheTestInstructions $userHadReadTheTestInstructions");
-    debugPrint("userCompletedTheTestlue $userCompletedTheTest");
 
-    if (userAuthenticated &&
-        userHadReadTheTestInstructions &&
-        userCompletedTheTest) {
-      return "/results";
-    } else if (userAuthenticated && userHadReadTheTestInstructions == false) {
-      return "/instructions";
-    } else if (userAuthenticated) {
-      return "/test";
-    } else {
-      return "/";
-    }
+    if(userAuthenticated == false )
+      {
+        return '/login';
+      }
+    else
+      {
+        return null;
+      }
   }
 
-  static Future<String?> redirectForResultPage(
-      BuildContext context, GoRouterState state) async {
-    bool value = true;
-    // PreferenceManager.getBool(SharedPreferencesKey.userCompletedTheTest);
-    if (value) {
-      return "/result";
-    } else {
-      return "/";
-    }
-  }
+
 }

@@ -1,4 +1,5 @@
 class ExceptionStrings {
+  static const String noDataFound = "No data found";
   static const String noDataAvailable = "no data available";
   static const String invalidPin = "Invalid pin";
   static const String pinIsEmpty = "Pin is empty";

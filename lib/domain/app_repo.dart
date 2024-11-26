@@ -8,4 +8,7 @@ abstract class AppRepo
 
   Future<bool> checkUserExist(String userID);
 
+  Future<UserProfile> fetchUserDetail(String userID);
+
+
 }

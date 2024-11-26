@@ -33,21 +33,10 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
             validationErrorText: ExceptionStrings.invalidPin,
             showValidationText: false));
 
-  getData() async {
-    try {
-      state = state.copyWith(showLoader: true, hasMessage: '');
-      // List<HomeResItemModel> res = await ref.getContentForHomeScreen();
-      // List<HomeResItemModel> res = await _repository.getContentForHomeScreen();
-      state = state.copyWith(
-        showLoader: false,
-      );
-    } catch (e) {
-      debuggerAdvance(tag: "At Catch Login Controller", value: e.runtimeType);
-      state = state.copyWith(showLoader: false, hasMessage: e.toString());
-    }
-  }
+
 
   validateIt({required String pin ,required String verificationID}) async {
+
    if(pin.isEmpty)
    {
        state = state.copyWith(
@@ -72,7 +61,6 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
        );
      }
 
-
     // / Use the verificationId and smsCode to create a PhoneAuthCredential
     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: pin);
 
@@ -86,15 +74,20 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
 
     // if user not exist will create identity
     if ( await appRepo.checkUserExist(user!.uid.toString())) {
+
       UserProfile userProfile = UserProfile(
         phoneNumber: user.phoneNumber,
         userId: user.uid,
+        isVerified: false
       );
 
       await appRepo.createUserIdentity(userProfile);
     }
     sharedPreferenceInstance.setBool(SharedPreferencesKey.isLogin, true);
-
+    state = state.copyWith(
+     showLoader:  false,
+     apiTriggerSuccess: true,
+   );
   }
 
 }
