@@ -6,7 +6,8 @@ import 'package:deliver_ease/presentation/common_components/complete_profile_vie
 import 'package:deliver_ease/presentation/common_components/text_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
+import '../../../core/routes/app_routes_name.dart';
 import 'dashboard_controller.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -46,7 +47,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               return Text(dashboardScreenStateNotifier.hasMessage);
 
             } else if (dashboardScreenStateNotifier.userProfile?.name == null) {
-                   return const CompleteProfileView();
+                   return  CompleteProfileView(
+                     onTap: ()
+                     {
+                       context.goNamed(AppRoutesName.profileScreen ,
+                         extra: {
+                           'userProfile': dashboardScreenStateNotifier.userProfile,
+                         },
+                       );
+                     },
+                   );
                   }
 
 

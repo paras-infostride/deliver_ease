@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
+import 'package:flutter/services.dart';
 
 import '../../core/utils/app_colors.dart';
 
@@ -19,7 +20,11 @@ AppBar customAppBar({
   PreferredSizeWidget? bottomWidget,
 }) {
   return AppBar(
-
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarColor: AppColors.primaryColor, // You can use this as well
+      statusBarIconBrightness: Brightness.light, // OR Vice Versa for ThemeMode.dark
+      statusBarBrightness: Brightness.light,
+    ),
     leading: hasArrow
         ? IconButton(
       key: stringHasValue(keyName) ? Key(keyName!) : const Key("key"),

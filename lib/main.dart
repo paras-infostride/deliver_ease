@@ -6,6 +6,7 @@ import 'core/global_providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'core/routes/app_router.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,20 +25,36 @@ void main() async {
 }
 
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
 
 
   @override
   Widget build(BuildContext context) {
     //  Initialize Responsive util
+
+    /// WORKS on every screen EXCEPT the screen in which appBar is used
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white, // navigation bar color
+          statusBarColor: Colors.white, // status bar color
+          statusBarIconBrightness: Brightness.dark, // status bar icons' color
+          systemNavigationBarIconBrightness: Brightness.dark,
+          // ice Versa for ThemeMode.dark
+      ),
+    );
+
      Responsive.size = MediaQuery.sizeOf(context);
 
     return MaterialApp.router(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.routers,
+
       theme: ThemeData(
+
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),

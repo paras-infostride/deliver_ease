@@ -63,6 +63,7 @@ dev_dependencies:
 #  utils
   intl: ^0.19.0
   connectivity_plus: ^6.1.0
+  image_picker: ^1.1.2
 
 #  Firebase dependencies
   firebase_core: ^3.8.0

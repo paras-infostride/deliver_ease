@@ -1,10 +1,18 @@
+import 'package:deliver_ease/core/routes/app_router.dart';
+import 'package:deliver_ease/core/routes/app_routes_name.dart';
 import 'package:deliver_ease/core/utils/app_dimesnions.dart';
 import 'package:deliver_ease/core/utils/responsive_util.dart';
 import 'package:deliver_ease/presentation/common_components/app_button.dart';
 import 'package:deliver_ease/presentation/common_components/text_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+
+
+
 class CompleteProfileView extends StatelessWidget {
-  const CompleteProfileView({super.key});
+  final Function() onTap;
+  const CompleteProfileView({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +39,7 @@ class CompleteProfileView extends StatelessWidget {
             width: Responsive.setWidthByPercentage(AppDimesnions.actionButtonWidth),
             margin: const EdgeInsets.only(top: 40),
             onPressed: () {
+             onTap();
 
         })
       ],
