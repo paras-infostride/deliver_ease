@@ -1,3 +1,5 @@
+import 'package:deliver_ease/core/routes/app_router.dart';
+import 'package:deliver_ease/core/routes/app_routes_name.dart';
 import 'package:deliver_ease/core/utils/list_utility.dart';
 import 'package:deliver_ease/core/utils/responsive_util.dart';
 import 'package:deliver_ease/core/utils/app_dimesnions.dart';
@@ -8,10 +10,9 @@ import 'package:deliver_ease/presentation/common_components/text_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../common_components/dialog/custom_alert_dialog.dart';
 import '../../../common_components/dialog/info_dialog.dart';
 import 'login_controller.dart';
-
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -62,9 +63,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           );
         }
 
-      if(prev != next  && next.apiTriggerSuccess == true)
+      if(prev != next  && next.apiTriggerSuccess == true && stringHasValue(next.verificationID))
         {
-         //TODO Navigate to OTP screen
+          context.goNamed(AppRoutesName.otpVerifyScreen,
+           extra: {
+           'verificationID': next.verificationID,
+         },);
 
         }
 
@@ -108,6 +112,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             loginScreenState.showLoader  ? const CircularProgressIndicator() :   AppButton(
               title: "Submit",
               onPressed: () {
+
+
                 if (_formKey.currentState!.validate()) {
                   ref.read(loginControllerProvider.notifier).submitPhoneNumber(phoneNumber: _textEditingController.text);
                 }

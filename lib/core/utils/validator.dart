@@ -124,6 +124,8 @@ class Validator {
     }
   };
 
+
+
   // ignore: prefer_function_declarations_over_variables
   static Function keepValidatorClean = (String input) {
     if (input.isEmpty || input.trim().isEmpty) {

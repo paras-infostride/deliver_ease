@@ -1,3 +1,4 @@
+import 'package:deliver_ease/core/utils/app_colors.dart';
 import 'package:deliver_ease/presentation/common_components/text_view.dart';
 import 'package:flutter/material.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
@@ -26,7 +27,7 @@ class AppButton extends StatelessWidget {
          EdgeInsets.zero,
         this.padding =  EdgeInsets.zero,
         required this.onPressed,
-        this.buttonBackgroundColor,
+        this.buttonBackgroundColor = AppColors.primaryColor,
         this.child,
         this.borderRadius = 6.0,
         this.textFontSize = 16,

@@ -17,6 +17,7 @@ class LoginScreenController extends StateNotifier<LoginScreenState> {
       : super(LoginScreenState(
     showLoader: false,
     hasMessage: "",
+    verificationID: ''
   ));
 
   submitPhoneNumber({required String phoneNumber}) async {
@@ -28,7 +29,7 @@ class LoginScreenController extends StateNotifier<LoginScreenState> {
       await auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await auth.signInWithCredential(credential);
+          // await auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
@@ -49,7 +50,8 @@ class LoginScreenController extends StateNotifier<LoginScreenState> {
 
           state = state.copyWith(
               showLoader: false,
-              apiTriggerSuccess: true
+              apiTriggerSuccess: true,
+            verificationID: verificationId
           );
           // Update the UI to prompt the user to enter the SMS code
         },
@@ -72,12 +74,14 @@ class LoginScreenController extends StateNotifier<LoginScreenState> {
 class LoginScreenState {
   bool showLoader = false;
   String hasMessage = "";
+  String verificationID = "";
   bool? apiTriggerSuccess;
 
 //<editor-fold desc="Data Methods">
   LoginScreenState({
     required this.showLoader,
     required this.hasMessage,
+    required this.verificationID,
     this.apiTriggerSuccess,
   });
 
@@ -88,17 +92,22 @@ class LoginScreenState {
           runtimeType == other.runtimeType &&
           showLoader == other.showLoader &&
           hasMessage == other.hasMessage &&
+          verificationID == other.verificationID &&
           apiTriggerSuccess == other.apiTriggerSuccess);
 
   @override
   int get hashCode =>
-      showLoader.hashCode ^ hasMessage.hashCode ^ apiTriggerSuccess.hashCode;
+      showLoader.hashCode ^
+      hasMessage.hashCode ^
+      verificationID.hashCode ^
+      apiTriggerSuccess.hashCode;
 
   @override
   String toString() {
     return 'LoginScreenState{' +
         ' showLoader: $showLoader,' +
         ' hasMessage: $hasMessage,' +
+        ' verificationID: $verificationID,' +
         ' apiTriggerSuccess: $apiTriggerSuccess,' +
         '}';
   }
@@ -106,11 +115,13 @@ class LoginScreenState {
   LoginScreenState copyWith({
     bool? showLoader,
     String? hasMessage,
+    String? verificationID,
     bool? apiTriggerSuccess,
   }) {
     return LoginScreenState(
       showLoader: showLoader ?? this.showLoader,
       hasMessage: hasMessage ?? this.hasMessage,
+      verificationID: verificationID ?? this.verificationID,
       apiTriggerSuccess: apiTriggerSuccess ?? this.apiTriggerSuccess,
     );
   }
@@ -119,6 +130,7 @@ class LoginScreenState {
     return {
       'showLoader': this.showLoader,
       'hasMessage': this.hasMessage,
+      'verificationID': this.verificationID,
       'apiTriggerSuccess': this.apiTriggerSuccess,
     };
   }
@@ -127,6 +139,7 @@ class LoginScreenState {
     return LoginScreenState(
       showLoader: map['showLoader'] as bool,
       hasMessage: map['hasMessage'] as String,
+      verificationID: map['verificationID'] as String,
       apiTriggerSuccess: map['apiTriggerSuccess'] as bool,
     );
   }

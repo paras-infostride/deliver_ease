@@ -1,4 +1,5 @@
 import 'package:deliver_ease/core/routes/redirect_util.dart';
+import 'package:deliver_ease/presentation/features/authentication/otp_verify/otp_verify_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,15 +18,26 @@ class AppRouter {
       return null;
     },
     debugLogDiagnostics: true,
-    navigatorKey: parentNavigatorKey,
-    initialLocation: '/',
+    // navigatorKey: parentNavigatorKey,
+    initialLocation: '/login',
     routes: [
-      ///RouteLanding Page Routes
+
       GoRoute(
-        path: '/',
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: LoginScreen(),
-        ),
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+        // redirect: RedirectUtil.redirectForAuth,
+      ),
+
+      GoRoute(
+        path: '/otp-verify',
+        name: AppRoutesName.otpVerifyScreen,
+        builder: (context, state) {
+          Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+          return  OtpVerifyScreen(
+            verificationID: extra['verificationID']
+          );
+        },
+
         // redirect: RedirectUtil.redirectForAuth,
       ),
 
