@@ -37,4 +37,21 @@ class AppRepoImpl implements AppRepo
     }
   }
 
+  @override
+  Future<bool> checkUserExist(String userID) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
+
+      final QuerySnapshot<Object?> res = await userCollection
+          .where(FirebaseStrings.userIdKey, isEqualTo: userID)
+          .get();
+
+      return res.docs.isNotEmpty;
+    }  catch (e) {
+      rethrow;
+    }
+
+  }
+
 }

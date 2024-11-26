@@ -84,14 +84,15 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
         tag: "user credential",
         value: userCredential.additionalUserInfo.toString());
 
+    // if user not exist will create identity
+    if ( await appRepo.checkUserExist(user!.uid.toString())) {
+      UserProfile userProfile = UserProfile(
+        phoneNumber: user.phoneNumber,
+        userId: user.uid,
+      );
 
-    UserProfile userProfile = UserProfile(
-      phoneNumber: user?.phoneNumber,
-      userId: user?.uid,
-    );
-
-    await appRepo.createUserIdentity(userProfile);
-
+      await appRepo.createUserIdentity(userProfile);
+    }
     sharedPreferenceInstance.setBool(SharedPreferencesKey.isLogin, true);
 
   }

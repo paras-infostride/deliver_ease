@@ -6,4 +6,6 @@ abstract class AppRepo
 {
   Future<void> createUserIdentity(UserProfile userProfile);
 
+  Future<bool> checkUserExist(String userID);
+
 }

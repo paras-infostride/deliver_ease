@@ -10,4 +10,5 @@ class Appstrings
 class FirebaseStrings
 {
  static const String  usersCollection = "users";
+ static const String  userIdKey = "user_id";
 }
