@@ -1,0 +1,17 @@
+{
+  "user_id" : "",
+  "phone_number" : "",
+  "profile_url" : "",
+  "name" : "",
+  "last_name" : "",
+  "address" : "",
+  "latitude" : "",
+  "longitude" : "",
+  "is_service_provider" : false,
+  "email_address" : false,
+  "gender" : "",
+  "date_of_birth" : "",
+  "vehicle_type": "",
+  "vehicle_number": "",
+  "is_verified": false
+}

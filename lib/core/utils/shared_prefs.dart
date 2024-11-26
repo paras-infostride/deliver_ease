@@ -6,6 +6,7 @@ class SharedPreferencesKey {
   //loginButton
   static const String keyId = 'id';
   static const String loginId = 'loginId';
+  static const String isLogin = 'isLogin';
 
 }
 

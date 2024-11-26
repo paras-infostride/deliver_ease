@@ -1,16 +1,32 @@
 import 'package:deliver_ease/core/utils/debug_logger.dart';
+import 'package:deliver_ease/core/utils/shared_prefs.dart';
 import 'package:deliver_ease/data/exceptions_string_constants.dart';
+import 'package:deliver_ease/domain/app_repo.dart';
+import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/global_providers.dart';
 
 final otpVerifyControllerProvider = StateNotifierProvider.autoDispose<
     OTPVerifyScreenController, OTPVerifyScreenState>((ref) {
-  return OTPVerifyScreenController();
+   SharedPreferences sharedPreferences=  ref.read(sharedPreferencesProvider).requireValue;
+     AppRepo appRepo = ref.read(appRepoProvider);
+  return OTPVerifyScreenController(
+    appRepo: appRepo,
+    sharedPreferenceInstance: sharedPreferences
+  );
 });
 
 class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
 
-  OTPVerifyScreenController()
+ final SharedPreferences sharedPreferenceInstance;
+ final  AppRepo appRepo ;
+
+  OTPVerifyScreenController(
+      {required this.sharedPreferenceInstance,
+        required this.appRepo})
       : super(OTPVerifyScreenState(
             showLoader: false,
             hasMessage: "",
@@ -61,16 +77,26 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: verificationID, smsCode: pin);
 
    // Sign in the user with the credential
-    await FirebaseAuth.instance.signInWithCredential(credential)
-        .then((UserCredential userCredential) {
+   UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    User? user = FirebaseAuth.instance.currentUser;
+    debuggerAdvance(
+        tag: "user credential",
+        value: userCredential.additionalUserInfo.toString());
 
 
-         });
-        }
+    UserProfile userProfile = UserProfile(
+      phoneNumber: user?.phoneNumber,
+      userId: user?.uid,
+    );
+
+    await appRepo.createUserIdentity(userProfile);
+
+    sharedPreferenceInstance.setBool(SharedPreferencesKey.isLogin, true);
+
+  }
 
 }
-
-
 
 class OTPVerifyScreenState {
   bool showLoader = false;
