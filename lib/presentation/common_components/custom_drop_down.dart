@@ -1,3 +1,4 @@
+import 'package:deliver_ease/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'common_components.dart';
@@ -138,9 +139,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
             child: DropdownButtonFormField<T>(
               // itemHeight: 200,
               validator: (value) {
-                if (value == null) {
-                  return 'Relationship is required';
-                }
+               return Validator.validateEmpty(value);
               },
               decoration: InputDecoration(
                   errorStyle: const TextStyle(
@@ -183,7 +182,6 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                         fontSize: 16,
                         color: Color(0xff9f9e9f)),
               ),
-              // dropdownColor: ,
               icon: Container(
                   margin: const EdgeInsets.only(right: 6),
                   child: widget.trailingIcon),

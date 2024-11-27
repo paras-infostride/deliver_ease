@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:deliver_ease/core/utils/app_date_picker.dart';
 import 'package:deliver_ease/core/utils/connectivity_wrapper.dart';
 import 'package:deliver_ease/core/utils/image_picker.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
@@ -173,6 +174,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                            validator: Validator.validateEmpty,
                            hint: "first name",
                          ),
+
                         //Last Name
                         AppTextField(
                           context: context,
@@ -183,9 +185,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           maxLimit: 100,
                           hint: "last name",
                         ),
+
                         // Email Address
                         AppTextField(
                           context: context,
+                          keyboard: TextInputType.emailAddress,
                           onChanged: (String value) {},
                           headingText: "Email address",
                           margin: const EdgeInsets.only(top: 20),
@@ -194,6 +198,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           hint: "example@gmail.com",
                           validator: Validator.validateEmail,
                         ),
+
                         // Address
                         AppTextField(
                           context: context,
@@ -204,7 +209,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           validator: Validator.validateEmpty,
                           maxLimit: 100,
                           hint: "26985 Brighton Lane, Lake Forest, CA 92630",
-                        ),  // Address
+                        ),  //
+                            // Address
                         // Phone Number
                         AppTextField(
                           context: context,
@@ -216,52 +222,76 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           maxLimit: 13,
                           hint: "+91987654321",
                         ),
-                        // Phone Number
+
+                        // Date of birth
                         AppTextField(
+                          readOnly: true,
                           context: context,
-                          onChanged: (String value) {},
-                          headingText: "Phone number",
+                          onChanged: (String value) {
+
+                          },
+                          onTap: ()
+                          async {
+
+                           await  appDatePicker(
+                             context: context,
+                             onDateSelect: (DateTime dateTime)
+                               {
+                                debuggerAdvance(tag: "selected date is ", value: DateFormatters.formatterddMMYYYY.format(dateTime));
+                                _textEditingControllerDateOFBirth.text = DateFormatters.formatterddMMYYYY.format(dateTime);
+                               },
+                             isLastDateIsCurrentDay: true,
+                               selectedDate: DateTime.now()
+                           );
+                          },
+                          headingText: "Date of birth",
                           margin: const EdgeInsets.only(top: 20),
-                          controller: _textEditingControllerAddress,
-                          validator: Validator.validateMobileNo,
-                          maxLimit: 13,
-                          hint: "+91987654321",
+                          controller: _textEditingControllerDateOFBirth,
+                          hint: "Select date of birth",
                         ),
 
-                            //Gender
-                            CustomDropdown(
+                        //Gender
+                        CustomDropdown(
 
-                              padding: EdgeInsets.only(left: 20),
-                              initialText: "Select gender",
-                              margin: const EdgeInsets.only(top: 20),
-                              headingText: "Gender",
-                              items: const ["Male", "Female","Others"],
-                              onChanged: (value) {
+                          padding: EdgeInsets.only(left: 20),
+                          initialText: "Select gender",
+                          margin: const EdgeInsets.only(top: 20),
+                          headingText: "Gender",
+                          items: const ["Male", "Female","Others"],
+                          onChanged: (value) {
 
-                              },
-                              onInit: (value) {
+                          },
+                          onInit: (value) {
 
-                              },
-                              isExpanded: true,
-                            ),   //Gender
+                          },
+                          isExpanded: true,
+                        ),   //Gender
 
-                            // is Service Provider
-                            CustomDropdown(
-                              padding: const EdgeInsets.only(left: 20),
-                              margin: const EdgeInsets.only(top: 20),
-                              headingText: "is Service provider",
-                              items: const ["Yes", "No"],
-                              onChanged: (value) {
+                        // is Service Provider
+                        CustomDropdown(
 
-                              },
-                              onInit: (value) {
+                          margin: const EdgeInsets.only(top: 20),
+                          headingText: "is Service provider",
+                          items: const ["Yes", "No"],
+                          onChanged: (value) {
 
-                              },
-                              isExpanded: true,
-                              selectedValueIndex: 1,
-                            ),
+                          },
+                          onInit: (value) {
 
+                          },
+                          isExpanded: true,
+                          selectedValueIndex: 1,
+                        ),
 
+                            // Vehicle type
+                        CustomDropdown(
+                          margin: const EdgeInsets.only(top: 20),
+                          headingText: "Vehicle type",
+                          items: const ["Bike", "Van", "Mini trucks"],
+                          onChanged: (value) {},
+                          onInit: (value) {},
+                          isExpanded: true,
+                        ),
 
                           ],
                                         ),

@@ -72,13 +72,14 @@ class Validator {
   };
 
   // ignore: prefer_function_declarations_over_variables
-  static Function validateEmpty = (String input) {
-    if (input.isEmpty || input.trim().isEmpty) {
+  static Function validateEmpty = (String? input) {
+    if (  input == null  || input.isEmpty || input.trim().isEmpty) {
       return "The field is required" ;
     } else {
       return null;
     }
   };
+
 
   // ignore: prefer_function_declarations_over_variables
   static Function validateEmptyPassword = (String input) {
