@@ -143,7 +143,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   errorStyle: const TextStyle(
                       fontSize: 16,
                       color: Colors.red,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       //TODO
                       fontFamily: ''),
                   hintStyle: TextStyle(

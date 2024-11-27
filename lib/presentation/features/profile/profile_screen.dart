@@ -35,6 +35,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   late final TextEditingController _textEditingControllerDateOFBirth;
   late final TextEditingController _textEditingControllerVehicleType;
   late final TextEditingController _textEditingControllerVehicleNumber;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -154,6 +155,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                  // Form view
                  Form(
+                   key: _formKey,
                      child: Center(
                        child: SizedBox(
                          width: Responsive.setWidthByPercentage(80),
@@ -225,15 +227,37 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           maxLimit: 13,
                           hint: "+91987654321",
                         ),
+                            CustomDropdown(
 
-                      ],
+                              padding: EdgeInsets.only(left: 20),
+                              initialText: "Select gender",
+                              margin: const EdgeInsets.only(top: 20),
+                              headingText: "Gender",
+                              items: const ["Male", "Female","Others"],
+                              onChanged: (value) {
+
+                              },
+                              onInit: (value) {
+
+                              },
+                              isExpanded: true,
+                            ),
+                          ],
                                         ),
                        ),
                      )
                  ),
 
+                 AppButton(
+                  title: "Save",
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {}
+                  },
+                  width: Responsive.setWidthByPercentage(80),
+                  margin: const EdgeInsets.only(top: 40),
+                ),
 
-               ],
+              ],
              ),
            ),
           ),

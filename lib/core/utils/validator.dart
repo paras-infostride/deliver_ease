@@ -20,7 +20,7 @@ class Validator {
     if (input != null && _emailRgex.hasMatch(input)) {
       return null;
     } else {
-      return "please_enter_a_valid_email_address";
+      return "please enter a valid email address";
     }
   };
 
