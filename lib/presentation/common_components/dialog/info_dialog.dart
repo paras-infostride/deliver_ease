@@ -78,6 +78,7 @@ import '../text_view.dart';
 }*/
 
 
+
 class InfoDialogViewGet extends StatelessWidget {
   final String message;
   final String title;
@@ -145,3 +146,58 @@ class InfoDialogViewGet extends StatelessWidget {
     );
   }
 }
+
+
+class ImagePickerDialog extends StatelessWidget {
+
+  final Function() onPressedOnGallery;
+  final Function() onPressedOnCamera;
+
+  const ImagePickerDialog(
+      {super.key,
+      required this.onPressedOnCamera,
+      required this.onPressedOnGallery});
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    return Dialog(
+      child:  Container(
+      width: size.width * .85,
+      height: size.height * .15,
+      padding: const EdgeInsets.symmetric(horizontal: 13.0),
+      child: Column(
+        children: [
+          const Spacer(
+            flex: 1,
+          ),
+          TextView(
+                onPressed: () {
+                  onPressedOnGallery();
+                },
+                title:  "gallery",
+            fontSize: 16,
+            margin: const EdgeInsets.only(top: 20),
+          ),
+        const Divider(),
+              TextView(
+                onPressed: () {
+                  onPressedOnCamera();
+                },
+                title:  "camera",
+           maxLine: 4,
+          overflow: TextOverflow.ellipsis,
+          fontSize: 16,
+                margin: const EdgeInsets.only(top: 6),
+          ),
+          const Spacer(
+            flex: 2,
+          ),
+
+        ],
+      )),
+    );
+  }
+}
+

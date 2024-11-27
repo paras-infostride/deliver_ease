@@ -6,6 +6,8 @@ import 'package:deliver_ease/presentation/common_components/common_components.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common_components/dialog/info_dialog.dart';
+
 
 class ProfileScreen extends ConsumerStatefulWidget {
   final UserProfile userProfile;
@@ -65,37 +67,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                              context: context,
                              barrierDismissible: true,
                              builder: (BuildContext context) {
-                               return  AlertDialog(
-                                 title: Material(
-                                     child: TextView(title: 'Choose an option')),
-                                 content: Material(
-                                   child: Column(
-                                     mainAxisSize: MainAxisSize.min,
-                                     children: <Widget>[
-                                       ListTile(
-                                         leading: Icon(Icons.photo_library),
-                                         title: TextView(title:'Gallery'),
-                                         onTap: () {
-                                           Navigator.of(context).pop();
-                                           // Handle gallery option
-                                         },
-                                       ),
-                                       ListTile(
-                                         leading: Icon(Icons.camera_alt),
-                                         title: TextView(title:'Camera'),
-                                         onTap: () {
-                                           Navigator.of(context).pop();
-                                           // Handle camera option
-                                         },
-                                       ),
-                                     ],
-                                   ),
-                                 ),
-                               );
+                            return ImagePickerDialog(
+                              onPressedOnCamera: () {
+
+                              },
+                              onPressedOnGallery: () {
+
+                              },
+                            );
                              },
                            );
-                         }
-                         ,
+                         },
                          child: Image.asset("assets/user_profile_grey.png",
                            height: Responsive.setWidth(120),
                            width: Responsive.setWidth(120),
