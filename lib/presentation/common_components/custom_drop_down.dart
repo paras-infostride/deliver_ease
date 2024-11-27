@@ -101,13 +101,13 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     _selectedValue = null;
   }
 
-  @override
-  void didUpdateWidget(covariant CustomDropdown<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    debugPrint("did widget update called");
-    _initValue();
-    setState(() {});
-  }
+  // @override
+  // void didUpdateWidget(covariant CustomDropdown<T> oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   debugPrint("did widget update called");
+  //   _initValue();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {

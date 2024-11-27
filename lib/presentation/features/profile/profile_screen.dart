@@ -227,6 +227,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           maxLimit: 13,
                           hint: "+91987654321",
                         ),
+
+                            //Gender
                             CustomDropdown(
 
                               padding: EdgeInsets.only(left: 20),
@@ -241,7 +243,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                               },
                               isExpanded: true,
+                            ),   //Gender
+
+                            // is Service Provider
+                            CustomDropdown(
+                              padding: const EdgeInsets.only(left: 20),
+                              margin: const EdgeInsets.only(top: 20),
+                              headingText: "is Service provider",
+                              items: const ["Yes", "No"],
+                              onChanged: (value) {
+
+                              },
+                              onInit: (value) {
+
+                              },
+                              isExpanded: true,
+                              selectedValueIndex: 1,
                             ),
+
+
+
                           ],
                                         ),
                        ),
