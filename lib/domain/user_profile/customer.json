@@ -13,5 +13,6 @@
   "date_of_birth" : "",
   "vehicle_type": "",
   "vehicle_number": "",
-  "is_verified": false
+  "is_verified": false,
+  "is_service_provider_active": false
 }

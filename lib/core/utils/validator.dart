@@ -74,7 +74,7 @@ class Validator {
   // ignore: prefer_function_declarations_over_variables
   static Function validateEmpty = (String input) {
     if (input.isEmpty || input.trim().isEmpty) {
-      return "the_field_is_required" ;
+      return "The field is required" ;
     } else {
       return null;
     }

@@ -69,7 +69,7 @@ class AppTextField extends StatefulWidget {
       this.initialValue,
       this.readOnly = false,
       this.fillColor = Colors.white,
-      this.borderRadius = 4.0,
+      this.borderRadius = 8.0,
       this.margin = EdgeInsets.zero});
 
   @override

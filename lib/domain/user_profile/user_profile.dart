@@ -14,8 +14,8 @@ class UserProfile {
   String? vehicleType;
   String? vehicleNumber;
   bool? isVerified;
+  bool? isServiceProviderActive;
 
-  //<editor-fold desc="Data Methods">
   UserProfile({
     this.userId,
     this.phoneNumber,
@@ -32,6 +32,7 @@ class UserProfile {
     this.vehicleType,
     this.vehicleNumber,
     this.isVerified,
+    this.isServiceProviderActive,
   });
 
   @override
@@ -53,7 +54,8 @@ class UserProfile {
           dateOfBirth == other.dateOfBirth &&
           vehicleType == other.vehicleType &&
           vehicleNumber == other.vehicleNumber &&
-          isVerified == other.isVerified);
+          isVerified == other.isVerified &&
+          isServiceProviderActive == other.isServiceProviderActive);
 
   @override
   int get hashCode =>
@@ -71,7 +73,8 @@ class UserProfile {
       dateOfBirth.hashCode ^
       vehicleType.hashCode ^
       vehicleNumber.hashCode ^
-      isVerified.hashCode;
+      isVerified.hashCode ^
+      isServiceProviderActive.hashCode;
 
   @override
   String toString() {
@@ -91,6 +94,7 @@ class UserProfile {
         ' vehicleType: $vehicleType,' +
         ' vehicleNumber: $vehicleNumber,' +
         ' isVerified: $isVerified,' +
+        ' isServiceProviderActive: $isServiceProviderActive,' +
         '}';
   }
 
@@ -110,6 +114,7 @@ class UserProfile {
     String? vehicleType,
     String? vehicleNumber,
     bool? isVerified,
+    bool? isServiceProviderActive,
   }) {
     return UserProfile(
       userId: userId ?? this.userId,
@@ -127,6 +132,8 @@ class UserProfile {
       vehicleType: vehicleType ?? this.vehicleType,
       vehicleNumber: vehicleNumber ?? this.vehicleNumber,
       isVerified: isVerified ?? this.isVerified,
+      isServiceProviderActive:
+          isServiceProviderActive ?? this.isServiceProviderActive,
     );
   }
 
@@ -146,6 +153,7 @@ class UserProfile {
     vehicleType = json['vehicle_type'];
     vehicleNumber = json['vehicle_number'];
     isVerified = json['is_verified'];
+    isServiceProviderActive = json['is_service_provider_active'];
   }
 
   Map<String, dynamic> toJson() {
@@ -165,8 +173,8 @@ class UserProfile {
     data['vehicle_type'] = this.vehicleType;
     data['vehicle_number'] = this.vehicleNumber;
     data['is_verified'] = this.isVerified;
+    data['is_service_provider_active'] = this.isServiceProviderActive;
     return data;
   }
 
-//</editor-fold>
 }
