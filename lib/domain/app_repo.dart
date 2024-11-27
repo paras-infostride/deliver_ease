@@ -10,5 +10,6 @@ abstract class AppRepo
 
   Future<UserProfile> fetchUserDetail(String userID);
 
+  Future<void> updateProfile({required UserProfile userProfile});
 
 }
