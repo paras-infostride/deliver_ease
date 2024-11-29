@@ -69,7 +69,6 @@ class ProfileScreenController extends StateNotifier<ProfileScreenState> {
     }
   }
 
-
   deleteProfile()
   async {
     try {

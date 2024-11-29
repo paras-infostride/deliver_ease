@@ -69,8 +69,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ProfileScreenState profileNotifier = ref.watch(profileControllerProvider);
 
+    ProfileScreenState profileNotifier = ref.watch(profileControllerProvider);
     ref.listen<ProfileScreenState>(profileControllerProvider, (prev, next) {
       if (prev != next && stringHasValue(next.hasMessage)) {
         showDialog(
@@ -89,6 +89,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       if(prev != next  && next.apiTriggredMessage == AppStrings.deleteProfileSuccessfully && next.showLoader == false)
       {
         context.goNamed(AppRoutesName.loginScreen);
+      }
+      else if(prev != next  && next.apiTriggredMessage == AppStrings.profileUpdateSuccessfully && next.showLoader == false)
+      {
+        context.goNamed(AppRoutesName.dashboardScreen);
       }
     });
 
@@ -355,6 +359,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         margin: const EdgeInsets.only(top: 40),
                       ),
 
+
+                /// Delete profile
                 TextView(title: "Delete Profile",
                 fontWeight: FontWeight.w700,
                 fontSize: 16,

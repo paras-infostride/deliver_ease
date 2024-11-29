@@ -90,7 +90,6 @@ class AppRepoImpl implements AppRepo
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
-      // final QuerySnapshot<Object?> res =
       await userCollection.doc(userProfile.userId).set(userProfile.toJson());
 
     }  catch (e) {
