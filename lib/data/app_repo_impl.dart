@@ -6,6 +6,7 @@ import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'exceptions_string_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class AppRepoImpl implements AppRepo
@@ -38,6 +39,7 @@ class AppRepoImpl implements AppRepo
       rethrow;
     }
   }
+
 
   @override
   Future<bool> checkUserExist(String userID) async {
@@ -88,7 +90,6 @@ class AppRepoImpl implements AppRepo
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
-
       // final QuerySnapshot<Object?> res =
       await userCollection.doc(userProfile.userId).set(userProfile.toJson());
 
@@ -96,6 +97,16 @@ class AppRepoImpl implements AppRepo
       rethrow;
     }
 
+  }
+
+  @override
+  Future<void> logOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    }
+    catch (e) {
+      rethrow;
+    }
   }
 
 }

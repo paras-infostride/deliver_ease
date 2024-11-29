@@ -73,16 +73,23 @@ class OTPVerifyScreenController extends StateNotifier<OTPVerifyScreenState> {
         value: userCredential.additionalUserInfo.toString());
 
     // if user not exist will create identity
-    if ( await appRepo.checkUserExist(user!.uid.toString())) {
+    // if ( ) {
+    //
+    //
+    // }
 
-      UserProfile userProfile = UserProfile(
-        phoneNumber: user.phoneNumber,
-        userId: user.uid,
-        isVerified: false
-      );
+  bool isUserAlreadyExist  = await appRepo.checkUserExist(user!.uid.toString());
+  debuggerAdvance(tag: 'isUserAlreadyExist', value: isUserAlreadyExist);
+   if (isUserAlreadyExist == false) {
+     UserProfile userProfile = UserProfile(
+         phoneNumber: user?.phoneNumber,
+         userId: user?.uid,
+         isVerified: false
+     );
 
-      await appRepo.createUserIdentity(userProfile);
-    }
+     await appRepo.createUserIdentity(userProfile);
+   }
+
     sharedPreferenceInstance.setBool(SharedPreferencesKey.isLogin, true);
     state = state.copyWith(
      showLoader:  false,

@@ -1,18 +1,16 @@
 import 'dart:io';
 
+import 'package:deliver_ease/core/routes/app_routes_name.dart';
 import 'package:deliver_ease/core/utils/app_date_picker.dart';
 import 'package:deliver_ease/core/utils/connectivity_wrapper.dart';
-import 'package:deliver_ease/core/utils/image_picker.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 import 'package:deliver_ease/presentation/common_components/common_components.dart';
 import 'package:deliver_ease/presentation/features/profile/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../common_components/dialog/info_dialog.dart';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:go_router/go_router.dart';
 
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -49,6 +47,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     _textEditingControllerDateOFBirth= TextEditingController();
     _textEditingControllerVehicleType= TextEditingController();
     _textEditingControllerVehicleNumber= TextEditingController();
+
+    WidgetsBinding.instance
+        .addPostFrameCallback((_)
+    {
+      ref.read(profileControllerProvider.notifier)
+          .isUserServiceProvider(widget.userProfile.isServiceProvider ?? false);
+    });
+
   }
 
   @override
@@ -64,11 +70,45 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     ProfileScreenState profileNotifier = ref.watch(profileControllerProvider);
+
+    ref.listen<ProfileScreenState>(profileControllerProvider, ( prev, next) {
+
+      if(prev != next  && stringHasValue(next.hasMessage))
+      {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return InfoDialogViewGet(message: next.hasMessage ,
+              onPressed: ()
+              {
+                Navigator.of(context).pop();
+              },
+
+            );
+          },
+        );
+      }
+
+      if(prev != next  && next.apiTriggredSuccess == true && next.showLoader == false)
+      {
+        context.goNamed(AppRoutesName.dashboardScreen,);
+      }
+
+    });
+
     return Scaffold(
-      appBar: customAppBar(title: "Profile"),
+
+      appBar: customAppBar(title: "Profile",
+      onBackPressed: ()
+      {
+        context.goNamed(AppRoutesName.dashboardScreen);
+      }),
       body: SafeArea(
         child:  Center(
           child: ConnectivityWrapper(
@@ -76,7 +116,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
            SingleChildScrollView(
              child: Column(
                children: [
-
                  // Image View
                  Container(
                  width: double.infinity,
@@ -97,7 +136,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                          return GestureDetector(
                            onTap: ()
                            {
-                             showDialog(
+                     /*        showDialog(
                                context: context,
                                barrierDismissible: true,
                                builder: (BuildContext context) {
@@ -120,7 +159,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 },
                               );
                                },
-                             );
+                             );*/
                            },
                            child: Builder(builder: (context)
                            {
@@ -162,11 +201,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                          width: Responsive.setWidthByPercentage(80),
                          child: Column(
                           children: [
+
                         // First Name
                          AppTextField(context: context, onChanged: (String value )
                            {
 
-                         },
+                           },
                            headingText: "First name",
                            margin: const EdgeInsets.only(top: 20),
                            controller: _textEditingControllerName,
@@ -196,7 +236,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           controller: _textEditingControllerEmailAddress,
                           maxLimit: 100,
                           hint: "example@gmail.com",
-                          validator: Validator.validateEmail,
+
                         ),
 
                         // Address
@@ -211,17 +251,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           hint: "26985 Brighton Lane, Lake Forest, CA 92630",
                         ),  //
                             // Address
-                        // Phone Number
-                        AppTextField(
-                          context: context,
-                          onChanged: (String value) {},
-                          headingText: "Phone number",
-                          margin: const EdgeInsets.only(top: 20),
-                          controller: _textEditingControllerAddress,
-                          validator: Validator.validateMobileNo,
-                          maxLimit: 13,
-                          hint: "+91987654321",
-                        ),
+
 
                         // Date of birth
                         AppTextField(
@@ -252,8 +282,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                         //Gender
                         CustomDropdown(
-
-                          padding: EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20),
                           initialText: "Select gender",
                           margin: const EdgeInsets.only(top: 20),
                           headingText: "Gender",
@@ -274,40 +303,75 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           headingText: "is Service provider",
                           items: const ["Yes", "No"],
                           onChanged: (value) {
-
+                             ref.read(profileControllerProvider.notifier).setUserServiceProvider(value =="Yes" ? true : false);
                           },
                           onInit: (value) {
 
                           },
                           isExpanded: true,
-                          selectedValueIndex: 1,
+                          selectedValueIndex: profileNotifier.isUSerServiceProvider ? 0:1,
                         ),
 
                             // Vehicle type
-                        CustomDropdown(
-                          margin: const EdgeInsets.only(top: 20),
-                          headingText: "Vehicle type",
-                          items: const ["Bike", "Van", "Mini trucks"],
-                          onChanged: (value) {},
-                          onInit: (value) {},
-                          isExpanded: true,
+                        Visibility(
+                          visible: profileNotifier.isUSerServiceProvider,
+                          child: CustomDropdown(
+                            margin: const EdgeInsets.only(top: 20),
+                            headingText: "Vehicle type",
+                            items: const ["Bike", "Van", "Mini trucks"],
+                            onChanged: (value) {},
+                            onInit: (value) {},
+                            isExpanded: true,
+                          ),
                         ),
 
+                         // Vehicle number
+                         Visibility(
+                           visible: profileNotifier.isUSerServiceProvider,
+                           child: AppTextField(
+                             context: context,
+                             onChanged: (String value) {},
+                             headingText: "Vehicle number",
+                             margin: const EdgeInsets.only(top: 20),
+                             controller: _textEditingControllerVehicleNumber,
+                             validator: Validator.validateEmpty,
+                             maxLimit: 13,
+                             hint: "PB 65 AQ 7085",
+                           ),
+                         ),
                           ],
                                         ),
                        ),
                      )
                  ),
 
-                 AppButton(
+             profileNotifier.showLoader ? const CircularProgressIndicator() :    AppButton(
                   title: "Save",
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+
+                      UserProfile userProfileReqModel = UserProfile(
+                        isVerified: widget.userProfile.isVerified,
+                        name: _textEditingControllerName.text,
+                        userId: widget.userProfile.userId, phoneNumber: widget.userProfile.phoneNumber,
+                        address: _textEditingControllerAddress.text,
+                        dateOfBirth: _textEditingControllerDateOFBirth.text,
+                        emailAddress: _textEditingControllerEmailAddress.text,
+                          gender: _textEditingControllerGender.text,
+                        isServiceProvider: ref.read(profileControllerProvider).isUSerServiceProvider,
+                        isServiceProviderActive: widget.userProfile.isServiceProviderActive,
+                        lastName: _textEditingControllerLastName.text,
+                        vehicleNumber: _textEditingControllerVehicleNumber.text,
+                        vehicleType: _textEditingControllerVehicleType.text,
+                      );
+
+                      ref.read(profileControllerProvider.notifier).updateProfile(userProfileReqModel);
+
+                    }
                   },
                   width: Responsive.setWidthByPercentage(80),
                   margin: const EdgeInsets.only(top: 40),
                 ),
-
               ],
              ),
            ),

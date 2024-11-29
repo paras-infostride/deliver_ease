@@ -27,6 +27,7 @@ class AppRouter {
       /// Login
       GoRoute(
         path: '/login',
+name: AppRoutesName.loginScreen,
         builder: (context, state) => const LoginScreen(),
         redirect: RedirectUtil.redirect,
       ),

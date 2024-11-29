@@ -41,6 +41,7 @@ class CustomDropdown<T> extends StatefulWidget {
   final List<T> items;
   final Function(T value) onChanged;
   double borderRadius;
+  final Function? validator;
   final Function(T value) onInit;
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
@@ -78,7 +79,7 @@ class CustomDropdown<T> extends StatefulWidget {
       this.fontSize = 18,
       this.color,
       this.textStyle,
-      this.hintStyle})
+      this.hintStyle, this.validator})
       : super(key: key);
 
   @override
@@ -128,85 +129,76 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
               margin: const EdgeInsets.only(bottom: 6),
             ),
           ],
-          Container(
-            // padding: widget.padding,
-            // height: widget.height,
-            // decoration: BoxDecoration(
-            //   color: widget.color ?? Colors.white,
-            //   border: Border.all(width: 1.2, color: widget.color ?? Colors.grey),
-            //   borderRadius: const BorderRadius.all(Radius.circular(8)),
-            // ),
-            child: DropdownButtonFormField<T>(
-              // itemHeight: 200,
-              validator: (value) {
-               return Validator.validateEmpty(value);
-              },
-              decoration: InputDecoration(
-                  errorStyle: const TextStyle(
+          DropdownButtonFormField<T>(
+            // itemHeight: 200,
+            validator: (value) {
+             return Validator.validateEmpty(value);
+            },
+            decoration: InputDecoration(
+                errorStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.red,
+                    fontWeight: FontWeight.w400,
+                    //TODO
+                    fontFamily: ''),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: BorderSide(
+                      color: widget.borderColor ?? Colors.grey, width: 1.0),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide:
+                      const BorderSide(color: Colors.grey, width: 1.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: BorderSide(
+                      color: widget.borderColor ?? Colors.grey, width: 1.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  borderSide: const BorderSide(color: Colors.red, width: 1.0),
+                ),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(widget.borderRadius)),
+                )),
+            isExpanded: widget.isExpanded,
+            hint: Text(
+              widget.initialText,
+              style: widget.hintStyle ??
+                  const TextStyle(
+                      fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: Colors.red,
-                      fontWeight: FontWeight.w400,
-                      //TODO
-                      fontFamily: ''),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    borderSide: BorderSide(
-                        color: widget.borderColor ?? Colors.grey, width: 1.0),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 1.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    borderSide: BorderSide(
-                        color: widget.borderColor ?? Colors.grey, width: 1.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    borderSide: const BorderSide(color: Colors.red, width: 1.0),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(widget.borderRadius)),
-                  )),
-              isExpanded: widget.isExpanded,
-              hint: Text(
-                widget.initialText,
-                style: widget.hintStyle ??
-                    const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Color(0xff9f9e9f)),
-              ),
-              icon: Container(
-                  margin: const EdgeInsets.only(right: 6),
-                  child: widget.trailingIcon),
-              value: _selectedValue,
-              onChanged: (T? newValue) {
-                if (newValue != null) {
-                  _selectedValue = newValue;
-                  widget.onChanged(newValue);
-                  setState(() {});
-                }
-              },
-              items: widget.items.map((T f) {
-                return DropdownMenuItem<T>(
-                  value: f,
-                  child: Text(
-                    f.toString(),
-                    style: widget.textStyle ??
-                        const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Color(0xff010001)),
-                  ),
-                );
-              }).toList(),
+                      color: Color(0xff9f9e9f)),
             ),
+            icon: Container(
+                margin: const EdgeInsets.only(right: 6),
+                child: widget.trailingIcon),
+            value: _selectedValue,
+            onChanged: (T? newValue) {
+              if (newValue != null) {
+                _selectedValue = newValue;
+                widget.onChanged(newValue);
+                setState(() {});
+              }
+            },
+            items: widget.items.map((T f) {
+              return DropdownMenuItem<T>(
+                value: f,
+                child: Text(
+                  f.toString(),
+                  style: widget.textStyle ??
+                      const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Color(0xff010001)),
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),

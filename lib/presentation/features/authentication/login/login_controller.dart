@@ -31,6 +31,7 @@ class LoginScreenController extends StateNotifier<LoginScreenState> {
         verificationCompleted: (PhoneAuthCredential credential) async {
           // await auth.signInWithCredential(credential);
         },
+
         verificationFailed: (FirebaseAuthException e) {
           if (e.code == 'invalid-phone-number') {
             state = state.copyWith(showLoader: false, hasMessage: "Invalid phone number");

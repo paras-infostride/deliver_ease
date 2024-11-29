@@ -102,7 +102,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               onChanged: (String value) {},
               onSubmitted: (String value)
               {
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate() && loginScreenState.showLoader == false) {
                   ref.read(loginControllerProvider.notifier).submitPhoneNumber(phoneNumber: _textEditingController.text);
                 }
               },
@@ -121,7 +121,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               onPressed: () {
 
 
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate() && loginScreenState.showLoader == false) {
                   ref.read(loginControllerProvider.notifier).submitPhoneNumber(phoneNumber: _textEditingController.text);
                 }
 

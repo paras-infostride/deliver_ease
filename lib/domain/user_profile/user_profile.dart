@@ -8,7 +8,7 @@ class UserProfile {
   String? latitude;
   String? longitude;
   bool? isServiceProvider;
-  bool? emailAddress;
+  String? emailAddress;
   String? gender;
   String? dateOfBirth;
   String? vehicleType;
@@ -108,7 +108,7 @@ class UserProfile {
     String? latitude,
     String? longitude,
     bool? isServiceProvider,
-    bool? emailAddress,
+    String? emailAddress,
     String? gender,
     String? dateOfBirth,
     String? vehicleType,
