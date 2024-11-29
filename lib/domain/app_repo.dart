@@ -12,6 +12,8 @@ abstract class AppRepo
 
   Future<void> updateProfile({required UserProfile userProfile});
 
+  Future<void> deleteProfile({required String userId});
+
   Future<void> logOut();
 
 }

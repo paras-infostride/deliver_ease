@@ -3,6 +3,8 @@
 class AppStrings
 {
  static const String  logoutSuccessfully = "logoutSuccessfully";
+ static const String  deleteProfileSuccessfully = "deleteProfileSuccessfully";
+ static const String  profileUpdateSuccessfully = "profileUpdateSuccessfully";
 }
 
 

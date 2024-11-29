@@ -109,4 +109,17 @@ class AppRepoImpl implements AppRepo
     }
   }
 
+  @override
+  Future<void> deleteProfile({required String userId})
+  async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
+      await userCollection.doc(userId).delete();
+    }
+    catch (e) {
+      rethrow;
+    }
+  }
+
 }
