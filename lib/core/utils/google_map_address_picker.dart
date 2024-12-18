@@ -54,7 +54,7 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
     _controller.addListener(() {
       // _onChanged();
     });
-    WidgetsBinding.instance!.addPostFrameCallback((_) async{
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
      await  _callApi();
     });
 
@@ -71,11 +71,11 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
 
    getSuggestion(String input) async {
 
-    const String PLACES_API_KEY = "";
+    const String placesApiKey = "";
 
     try{
       String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-      String request = '$baseURL?input=$input&key=$PLACES_API_KEY&sessiontoken=$_sessionToken';
+      String request = '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request));
       // var data = json.decode(response.body);
       debuggerAdvance(tag: "statusCode ", value: response.statusCode);
@@ -87,7 +87,7 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
       //['predictions']
       debuggerAdvance(tag: "received data", value: "/////////");
       PlacesResponseModel placesResponseModel = PlacesResponseModel.fromJson(json.decode(response.body));
-      prettyPrintJson(tag: "received data", response: placesResponseModel.toString());
+      prettyPrintJson(tag: "received data", response: json.decode(response.body));
         // _placeList = receivedData;
 
         return placesResponseModel.predictions ?? <Predictions>[];
@@ -100,6 +100,8 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
     }
 
   }
+
+  String address = '';
 
   @override
   Widget build(BuildContext context) {
@@ -153,10 +155,18 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
                     LatLngBounds bounds = await mapController.getVisibleRegion();
                     final lon = (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
                     final lat = (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+                   // String value =    await  GetCurrentLatLongUtil.getAddressFromLatLong(lat, lon);
+                   // address = value;
+                   // setState(() {});
+                    String? value =    await  GetCurrentLatLongUtil.getAddressFromLatLong(_latLong.latitude, _latLong.longitude);
+                    address = value ?? '';
+                    setState(() {});
+
                     debuggerAdvance(tag: "lat long when on camera Idle", value: " ${lat}  and ${lon}");
                   },
-                  onCameraMove: (cameraPosition) {
+                  onCameraMove: (cameraPosition) async {
                     _latLong =  LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
+
                     // debuggerAdvance(tag: "lat long when on camera move", value: " ${_latLong.latitude}  and ${_latLong.longitude}");
                    //gets the center lattitude
                   },
@@ -174,18 +184,7 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
                    const SizedBox(
                      height: 40,
                      width: double.infinity,
-                   ),
-                    // AppTextField(context: context, onChanged: (String? value)
-                    // {
-                    //   if (stringHasValue(value)) {
-                    //     getSuggestion(value!);
-                    //   }
-                    // },
-                    //   controller: _controller,
-                    //   width: Responsive.setWidthByPercentage(AppDimesnions.textFieldWidth),
-                    //   validator: Validator.validateEmpty,
-                    // ),
-
+                    ),
 
                     SizedBox(
                        width: Responsive.setWidthByPercentage(80),
@@ -208,6 +207,7 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
                         },
                         builder: (context, controller, focusNode) {
                           return AppTextField(
+                            hint: "Address..",
                             focusNode: focusNode,
                             context: context,
                             onChanged: (String? value)
@@ -228,11 +228,32 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
                             title: Text(prediction.description ?? ''),
                           );
                         },
-                        onSelected: (city) {
-
+                        onSelected: (prediction) async {
+                          // String? value =    await  GetCurrentLatLongUtil.getAddressFromLatLong(prediction., _latLong.longitude);
+                          // address = value ?? '';
+                          // setState(() {});
                         },
                       ),
-                    )
+                    ),
+                   const  Spacer(),
+
+
+                    if(stringHasValue(address))
+                      ...{
+                      TextView(title: address , fontSize: 22,
+                      textColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 12,horizontal:  12),
+                        backgroundColor: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+
+                      )
+                    },
+
+                    const SizedBox(
+                      height: 40,
+                      width: double.infinity,
+                    ),
+
 
                   ],
                 )
@@ -252,12 +273,15 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
        position = await  GetCurrentLatLongUtil.getCurrentPosition();
        debuggerAdvance(tag: "lat long", value: "${position.latitude} and ${position.longitude}");
        _latLong =  LatLng(position.latitude, position.longitude);
-       mapController.animateCamera(
-         CameraUpdate.newCameraPosition(
-           CameraPosition(target: LatLng(_latLong.latitude, _latLong.longitude), zoom: 15),
-         ),
-       );
 
+       // mapController.animateCamera(
+       //   CameraUpdate.newCameraPosition(
+       //     CameraPosition(target: LatLng(_latLong.latitude, _latLong.longitude), zoom: 15),
+       //   ),
+       // );
+
+       String? value =    await  GetCurrentLatLongUtil.getAddressFromLatLong(_latLong.latitude, _latLong.longitude);
+       address = value ?? '';
        _showLoader = false;
        setState(() {});
      }  catch (e) {

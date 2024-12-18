@@ -1,6 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/widgets.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../../data/exceptions_string_constants.dart';
 import 'debug_logger.dart';
+import 'package:http/http.dart' as http;
+
 
 class GetCurrentLatLongUtil {
   /// Determine the current position of the device.
@@ -47,6 +54,31 @@ class GetCurrentLatLongUtil {
         throw "locationPermissionDenied";
       }
     }
+  }
+
+ static Future<String?> getAddressFromLatLong(double latitude , double longitude) async {
+   try {
+ //     List<Placemark> addresses = await placemarkFromCoordinates(latitude, longitude);
+ // debugPrint("addresses is : ${addresses}");
+ //     var first = addresses.first;
+ //     debugPrint("${first.name} : ${first..administrativeArea}");
+ //     return first.name ?? '';
+     const String placesApiKey = "";
+     String _host = 'https://maps.google.com/maps/api/geocode/json';
+     final url = '$_host?key=$placesApiKey&language=en&latlng=$latitude,$longitude';
+     var response = await http.get(Uri.parse(url));
+     if (response.statusCode == 200) {
+       Map data = jsonDecode(response.body);
+       String _formattedAddress = data["results"][0]["formatted_address"];
+       print("response ==== $_formattedAddress");
+       return _formattedAddress;
+     }
+     else {
+       throw ExceptionStrings.someThingWentWrong;
+     }
+   }  catch (e) {
+     throw ExceptionStrings.someThingWentWrong;
+   }
   }
 
 
