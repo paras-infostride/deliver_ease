@@ -125,6 +125,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     } else {
                       return GestureDetector(
                         onTap: () {
+
                           /*        showDialog(
                                context: context,
                                barrierDismissible: true,
@@ -221,6 +222,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
                             // Address
                             AppTextField(
+                              readOnly: true,
+                              onTap: ()
+                              {
+                                 context.goNamed(AppRoutesName.googleMApAddressPicker,
+                                   extra: {
+                                     'userProfile': widget.userProfile,
+                                   },);
+                              },
                               context: context,
                               onChanged: (String value) {},
                               headingText: "Address",
@@ -359,23 +368,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         margin: const EdgeInsets.only(top: 40),
                       ),
 
-
-                /// Delete profile
-                TextView(title: "Delete Profile",
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                textColor: Colors.red,
-                margin: EdgeInsets.only(bottom: Responsive.setHeightByPercentage(5) ,top: Responsive.setHeightByPercentage(7)),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-
-                onPressed: ()
-                  {
-                    ref.read(profileControllerProvider.notifier).deleteProfile();
-                  },
-
-
-                )
-              ],
+                        /// Delete profile
+                        TextView(
+                          title: "Delete Profile",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          textColor: Colors.red,
+                          margin: EdgeInsets.only(
+                              bottom: Responsive.setHeightByPercentage(5),
+                              top: Responsive.setHeightByPercentage(7)),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          onPressed: () {
+                            ref
+                                .read(profileControllerProvider.notifier)
+                                .deleteProfile();
+                          },
+                        )
+                      ],
             ),
           )
         ),

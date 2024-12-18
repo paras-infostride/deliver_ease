@@ -70,6 +70,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       appBar: customAppBar(title: "DeliverEase",
       hasArrow: false,
       actions: [
+
+        if(stringHasValue(dashboardScreenStateNotifier.userProfile?.name)
+        )...{
+          IconButton(onPressed: ()
+          {
+            context.goNamed(AppRoutesName.profileScreen,
+              extra: {
+                'userProfile': dashboardScreenStateNotifier.userProfile,
+              },);
+            // ref.read(dashboardScreenControllerProvider.notifier).logOut();
+          },
+              icon: const Icon(Icons.account_circle , color:  Colors.white,)),
+        },
         IconButton(onPressed: ()
             {
               ref.read(dashboardScreenControllerProvider.notifier).logOut();

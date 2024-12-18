@@ -1,4 +1,5 @@
 import 'package:deliver_ease/core/routes/redirect_util.dart';
+import 'package:deliver_ease/core/utils/google_map_address_picker.dart';
 import 'package:deliver_ease/presentation/features/authentication/otp_verify/otp_verify_screen.dart';
 import 'package:deliver_ease/presentation/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,18 @@ name: AppRoutesName.loginScreen,
           return  ProfileScreen(
             userProfile: extra["userProfile"],
           );
+        },
+        redirect: RedirectUtil.redirect,
+      ),
+
+      /// Profile
+      GoRoute(
+        path: '/pick-location',
+        name: AppRoutesName.googleMApAddressPicker,
+        builder: (context, state)
+        {
+          Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+          return   AddressPickerScreen(userProfile: extra["userProfile"],);
         },
         redirect: RedirectUtil.redirect,
       ),
