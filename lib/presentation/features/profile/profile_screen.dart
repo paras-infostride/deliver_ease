@@ -57,7 +57,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       _textEditingControllerDateOFBirth.text =
           widget.userProfile?.dateOfBirth ?? '';
       _textEditingControllerGender.text = widget.userProfile?.gender ?? 'Male';
-      selectedVehicleType = widget.userProfile?.vehicleType ?? '';
+      selectedVehicleType = widget.userProfile?.vehicleType ?? 'Bike';
 
       _textEditingControllerVehicleNumber.text =
           widget.userProfile?.vehicleNumber ?? '';
@@ -340,7 +340,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                             value: value);
 
                                         selectedIsUSerServiceProvider = value == "Yes" ? true : false;
-
+                                        selectedVehicleType = "Bike";
                                         setState(() {});
                                         // ref
                                         //     .read(profileControllerProvider
