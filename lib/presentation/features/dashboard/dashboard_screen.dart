@@ -7,10 +7,12 @@ import 'package:deliver_ease/presentation/common_components/common_components.da
 import 'package:deliver_ease/presentation/common_components/complete_profile_view.dart';
 import 'package:deliver_ease/presentation/common_components/dialog/info_dialog.dart';
 import 'package:deliver_ease/presentation/common_components/text_view.dart';
+import 'package:deliver_ease/presentation/features/dashboard/service_provider_dashboard_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/routes/app_routes_name.dart';
+import 'customer_dashboard_view.dart';
 import 'dashboard_controller.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -38,7 +40,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DashboardScreenState  dashboardScreenStateNotifier = ref.watch(dashboardScreenControllerProvider);
+
+    DashboardScreenState dashboardScreenStateNotifier = ref.watch(dashboardScreenControllerProvider);
 
     ref.listen<DashboardScreenState>(dashboardScreenControllerProvider, ( prev, next) {
 
@@ -113,10 +116,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             else if (dashboardScreenStateNotifier.userProfile?.isVerified == null || dashboardScreenStateNotifier.userProfile?.isVerified == false ) {
                    return const NoVerifiedView();
                   }
-            else {
-              return TextView(title: dashboardScreenStateNotifier.userProfile.toString(),
-              maxLine: 30,);
-            }
+            else if(dashboardScreenStateNotifier.userProfile?.isServiceProvider ?? false ){
+
+              return  const ServiceProviderDashboardView();
+            } else
+              {
+                return const CustomerDashboardView();
+              }
           })
         ),
       ),

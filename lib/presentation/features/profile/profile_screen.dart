@@ -419,9 +419,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                           _textEditingControllerEmailAddress
                                               .text,
                                       gender: _textEditingControllerGender.text,
-                                      isServiceProvider: ref
-                                          .read(profileControllerProvider)
-                                          .isUSerServiceProvider,
+                                      isServiceProvider: selectedIsUSerServiceProvider,
                                       isServiceProviderActive: widget
                                           .userProfile?.isServiceProviderActive,
                                       lastName:

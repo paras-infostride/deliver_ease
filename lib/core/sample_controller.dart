@@ -13,7 +13,6 @@ class SampleScreenController extends StateNotifier<SampleScreenState> {
     showLoader: false,
     hasMessage: "",
   ));
-
   getData() async {
     try {
       state =

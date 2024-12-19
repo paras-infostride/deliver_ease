@@ -18,12 +18,10 @@ final profileControllerProvider = StateNotifierProvider.autoDispose<ProfileScree
   );
 });
 
-
 class ProfileScreenController extends StateNotifier<ProfileScreenState> {
 
   final  AppRepo appRepo;
   final SharedPreferences sharedPreferenceInstance;
-
 
   ProfileScreenController({
     required this.appRepo,
@@ -39,8 +37,6 @@ class ProfileScreenController extends StateNotifier<ProfileScreenState> {
         isUSerServiceProvider: false,
         )
   );
-
-
 
   setUserServiceProvider(bool isUserProvider) {
     debuggerAdvance(tag: "initially is User Service Provider", value: isUserProvider);
@@ -97,7 +93,6 @@ class ProfileScreenController extends StateNotifier<ProfileScreenState> {
   }
 
 }
-
 
 class ProfileScreenState {
 

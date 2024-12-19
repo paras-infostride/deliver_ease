@@ -5,8 +5,8 @@ class UserProfile {
   String? name;
   String? lastName;
   String? address;
-  String? latitude;
-  String? longitude;
+  double? latitude;
+  double? longitude;
   bool? isServiceProvider;
   String? emailAddress;
   String? gender;
@@ -16,6 +16,7 @@ class UserProfile {
   bool? isVerified;
   bool? isServiceProviderActive;
 
+//<editor-fold desc="Data Methods">
   UserProfile({
     this.userId,
     this.phoneNumber,
@@ -105,8 +106,8 @@ class UserProfile {
     String? name,
     String? lastName,
     String? address,
-    String? latitude,
-    String? longitude,
+    double? latitude,
+    double? longitude,
     bool? isServiceProvider,
     String? emailAddress,
     String? gender,
@@ -157,24 +158,25 @@ class UserProfile {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['user_id'] = this.userId;
-    data['phone_number'] = this.phoneNumber;
-    data['profile_url'] = this.profileUrl;
-    data['name'] = this.name;
-    data['last_name'] = this.lastName;
-    data['address'] = this.address;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['is_service_provider'] = this.isServiceProvider;
-    data['email_address'] = this.emailAddress;
-    data['gender'] = this.gender;
-    data['date_of_birth'] = this.dateOfBirth;
-    data['vehicle_type'] = this.vehicleType;
-    data['vehicle_number'] = this.vehicleNumber;
-    data['is_verified'] = this.isVerified;
-    data['is_service_provider_active'] = this.isServiceProviderActive;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['user_id'] = userId;
+    data['phone_number'] = phoneNumber;
+    data['profile_url'] = profileUrl;
+    data['name'] = name;
+    data['last_name'] = lastName;
+    data['address'] = address;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['is_service_provider'] = isServiceProvider;
+    data['email_address'] = emailAddress;
+    data['gender'] = gender;
+    data['date_of_birth'] = dateOfBirth;
+    data['vehicle_type'] = vehicleType;
+    data['vehicle_number'] = vehicleNumber;
+    data['is_verified'] = isVerified;
+    data['is_service_provider_active'] = isServiceProviderActive;
     return data;
   }
 
+//</editor-fold>
 }
