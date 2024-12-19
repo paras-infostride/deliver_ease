@@ -58,6 +58,29 @@ class AppRepoImpl implements AppRepo
   }
 
   @override
+  Future<List<UserProfile>> getListOfAllServiceProvider() async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
+
+      final QuerySnapshot<Object?> response = await userCollection
+          .where(FirebaseStrings.isServiceProviderKey, isEqualTo: true).get();
+
+      List<UserProfile> listOfUserProfile = [];
+      for (int i = 0; i < response.docs.length; i++) {
+
+        Map<String, dynamic> data = response.docs[i].data() as Map<String, dynamic>;
+        listOfUserProfile
+            .add(UserProfile.fromJson(data));
+        // print("title : ${response.docs[i].data()["title"]}");
+      }
+      return listOfUserProfile;
+    }  catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<UserProfile> fetchUserDetail(String userID) async {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;

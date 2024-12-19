@@ -126,6 +126,7 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
             return Stack(
               alignment: Alignment.center,
               children: [
+
                 GoogleMap(
                   myLocationEnabled: true,
                   onMapCreated: _onMapCreated,

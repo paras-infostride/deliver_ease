@@ -14,6 +14,8 @@ abstract class AppRepo
 
   Future<void> deleteProfile({required String userId});
 
+  Future<List<UserProfile>> getListOfAllServiceProvider();
+
   Future<void> logOut();
 
 }
