@@ -40,11 +40,10 @@ class ProfileScreenController extends StateNotifier<ProfileScreenState> {
         )
   );
 
-  isUserServiceProvider(bool isUserProvider) {
-    state = state.copyWith(isUSerServiceProvider: isUserProvider);
-  }
+
 
   setUserServiceProvider(bool isUserProvider) {
+    debuggerAdvance(tag: "initially is User Service Provider", value: isUserProvider);
     state = state.copyWith(isUSerServiceProvider: isUserProvider);
   }
 

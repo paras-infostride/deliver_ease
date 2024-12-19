@@ -155,7 +155,6 @@ class Terms {
   }
 }
 
-
 class MainTextMatchedSubstrings {
   int? length;
   int? offset;

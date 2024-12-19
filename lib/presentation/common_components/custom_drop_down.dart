@@ -79,7 +79,8 @@ class CustomDropdown<T> extends StatefulWidget {
       this.fontSize = 18,
       this.color,
       this.textStyle,
-      this.hintStyle, this.validator})
+      this.hintStyle,
+      this.validator})
       : super(key: key);
 
   @override
@@ -132,7 +133,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           DropdownButtonFormField<T>(
             // itemHeight: 200,
             validator: (value) {
-             return Validator.validateEmpty(value);
+              return Validator.validateEmpty(value);
             },
             decoration: InputDecoration(
                 errorStyle: const TextStyle(
@@ -148,8 +149,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius),
-                  borderSide:
-                      const BorderSide(color: Colors.grey, width: 1.0),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius),
