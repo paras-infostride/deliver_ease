@@ -32,6 +32,7 @@ class CustomerDashboardController extends StateNotifier<CustomerDashboardState> 
       Position position =   await  GetCurrentLatLongUtil.getCurrentPosition();
       List<UserProfile> listOfUserProfile = await appRepo.getListOfAllServiceProvider();
       debuggerAdvance(tag: "list of Service provider is ", value: listOfUserProfile.length);
+
       // List<HomeResItemModel> res = await ref.getContentForHomeScreen();
       // List<HomeResItemModel> res = await _repository.getContentForHomeScreen();
 

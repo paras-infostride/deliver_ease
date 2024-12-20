@@ -28,7 +28,7 @@ class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
 
   }
 
-  void _add() {
+   _add() async{
 
     CustomerDashboardState customerDashboardState = ref.watch(customerDashboardProvider);
 
@@ -40,6 +40,9 @@ class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
 
         // creating a new MARKER
         final Marker marker = Marker(
+          icon: await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(48, 48)),   _iconRecogniserBasedOnVehicleType(userProfile.vehicleType.toString())
+    ),
           markerId: markerId,
           position: LatLng(
             userProfile.latitude!.toDouble(),
@@ -81,8 +84,8 @@ class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
     return  GoogleMap(
       myLocationEnabled: true,
       onMapCreated: _onMapCreated,
-      myLocationButtonEnabled: true,
-      compassEnabled: true,
+      myLocationButtonEnabled: false,
+      compassEnabled: false,
       markers: Set.of(_markers),
       initialCameraPosition: CameraPosition(
         target: customerDashboardState.latLng!,
@@ -108,5 +111,17 @@ class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
       },
 
     );
+  }
+
+  String _iconRecogniserBasedOnVehicleType(String vehicleType) {
+
+    if(vehicleType == "Bike" )
+      {
+        return "assets/markers/motorbike.png";
+      } else if (vehicleType == "Van") {
+      return "assets/markers/van.png";
+    } else {
+      return "assets/markers/mini_truck.png";
+    }
   }
 }
