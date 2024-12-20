@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:deliver_ease/core/routes/app_router.dart';
 import 'package:deliver_ease/core/routes/app_routes_name.dart';
+import 'package:deliver_ease/core/utils/app_strings.dart';
 import 'package:deliver_ease/core/utils/get_current_lat_long.dart';
 import 'package:deliver_ease/core/utils/utils.dart';
 import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
@@ -71,11 +72,11 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
 
    getSuggestion(String input) async {
 
-    const String placesApiKey = "";
+
 
     try{
       String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-      String request = '$baseURL?input=$input&key=$placesApiKey&sessiontoken=$_sessionToken';
+      String request = '$baseURL?input=$input&key=${AppStrings.randomUID}&sessiontoken=$_sessionToken';
       var response = await http.get(Uri.parse(request));
       // var data = json.decode(response.body);
       debuggerAdvance(tag: "statusCode ", value: response.statusCode);

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:deliver_ease/core/utils/app_strings.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -63,9 +64,9 @@ class GetCurrentLatLongUtil {
  //     var first = addresses.first;
  //     debugPrint("${first.name} : ${first..administrativeArea}");
  //     return first.name ?? '';
-     const String placesApiKey = "";
+
      String _host = 'https://maps.google.com/maps/api/geocode/json';
-     final url = '$_host?key=$placesApiKey&language=en&latlng=$latitude,$longitude';
+     final url = '$_host?key=${AppStrings.randomUID}&language=en&latlng=$latitude,$longitude';
      var response = await http.get(Uri.parse(url));
      if (response.statusCode == 200) {
        Map data = jsonDecode(response.body);

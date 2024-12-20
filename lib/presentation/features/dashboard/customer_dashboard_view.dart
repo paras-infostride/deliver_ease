@@ -30,6 +30,8 @@ class _CustomerDashboardViewState extends ConsumerState<CustomerDashboardView> {
   @override
   Widget build(BuildContext context) {
     CustomerDashboardState customerDashboardState = ref.watch(customerDashboardProvider);
+
+
     return Builder(
       builder: (context) {
 
@@ -40,13 +42,11 @@ class _CustomerDashboardViewState extends ConsumerState<CustomerDashboardView> {
         }
         else
           {
-            return Column(
+            return Stack(
               children: [
 
-                SizedBox(
-                    width: double.infinity,
-                    height: Responsive.setHeightByPercentage(45),
-                    child: GoogleMapMarkerView()),
+                GoogleMapMarkerView(),
+
               ],
             );
           }

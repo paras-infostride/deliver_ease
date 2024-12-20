@@ -20,8 +20,9 @@ class CustomerDashboardController extends StateNotifier<CustomerDashboardState> 
   final AppRepo appRepo;
   CustomerDashboardController({required this.appRepo})
       : super(CustomerDashboardState(
-          showLoader: false,
+          showLoader: true,
           hasMessage: "",
+      listOfUserProfile:  []
         ));
 
   getInitialData() async {
@@ -38,7 +39,8 @@ class CustomerDashboardController extends StateNotifier<CustomerDashboardState> 
         showLoader: false,
         latLng: LatLng(
             position.latitude,
-            position.longitude)
+            position.longitude),
+        listOfUserProfile: listOfUserProfile
       );
     }
 
@@ -56,12 +58,14 @@ class CustomerDashboardState {
   bool showLoader = false;
   String hasMessage = "";
   LatLng?  latLng;
+  List<UserProfile> listOfUserProfile;
 
-//<editor-fold desc="Data Methods">
+ //<editor-fold desc="Data Methods">
   CustomerDashboardState({
     required this.showLoader,
     required this.hasMessage,
     this.latLng,
+    required this.listOfUserProfile,
   });
 
   @override
@@ -71,11 +75,15 @@ class CustomerDashboardState {
           runtimeType == other.runtimeType &&
           showLoader == other.showLoader &&
           hasMessage == other.hasMessage &&
-          latLng == other.latLng);
+          latLng == other.latLng &&
+          listOfUserProfile == other.listOfUserProfile);
 
   @override
   int get hashCode =>
-      showLoader.hashCode ^ hasMessage.hashCode ^ latLng.hashCode;
+      showLoader.hashCode ^
+      hasMessage.hashCode ^
+      latLng.hashCode ^
+      listOfUserProfile.hashCode;
 
   @override
   String toString() {
@@ -83,6 +91,7 @@ class CustomerDashboardState {
         ' showLoader: $showLoader,' +
         ' hasMessage: $hasMessage,' +
         ' latLng: $latLng,' +
+        ' listOfUserProfile: $listOfUserProfile,' +
         '}';
   }
 
@@ -90,11 +99,13 @@ class CustomerDashboardState {
     bool? showLoader,
     String? hasMessage,
     LatLng? latLng,
+    List<UserProfile>? listOfUserProfile,
   }) {
     return CustomerDashboardState(
       showLoader: showLoader ?? this.showLoader,
       hasMessage: hasMessage ?? this.hasMessage,
       latLng: latLng ?? this.latLng,
+      listOfUserProfile: listOfUserProfile ?? this.listOfUserProfile,
     );
   }
 
@@ -103,6 +114,7 @@ class CustomerDashboardState {
       'showLoader': this.showLoader,
       'hasMessage': this.hasMessage,
       'latLng': this.latLng,
+      'listOfUserProfile': this.listOfUserProfile,
     };
   }
 
@@ -111,8 +123,10 @@ class CustomerDashboardState {
       showLoader: map['showLoader'] as bool,
       hasMessage: map['hasMessage'] as String,
       latLng: map['latLng'] as LatLng,
+      listOfUserProfile: map['listOfUserProfile'] as List<UserProfile>,
     );
   }
 
 //</editor-fold>
+
 }
