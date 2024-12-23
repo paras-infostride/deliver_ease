@@ -1,10 +1,16 @@
+import 'package:deliver_ease/core/routes/app_router.dart';
+import 'package:deliver_ease/core/routes/app_routes_name.dart';
 import 'package:deliver_ease/core/utils/responsive_util.dart';
+import 'package:deliver_ease/presentation/common_components/app_button.dart';
 import 'package:deliver_ease/presentation/common_components/app_text_fields.dart';
 import 'package:deliver_ease/presentation/common_components/google_map_marker_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'controllers/customer_dashboard_controller.dart';
+import 'package:go_router/go_router.dart';
+
+import 'dashboard_controller.dart';
 
 class CustomerDashboardView extends ConsumerStatefulWidget {
   const CustomerDashboardView({super.key});
@@ -106,14 +112,14 @@ class _CustomerDashboardViewState extends ConsumerState<CustomerDashboardView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                            children: [
-
-                             AppTextField(context: context, onChanged: (String? value)
-                             {},
-                             width: Responsive.setWidthByPercentage(80),
+                             AppButton(title: "Parcel it", onPressed: ()
+                             {
+                               context.goNamed(AppRoutesName.bookingScreen , extra: {
+                                 "userProfile" :   ref.read(dashboardScreenControllerProvider).userProfile
+                               });
+                             },
+                               width: Responsive.setWidthByPercentage(80),
                                margin: const EdgeInsets.only(top: 30),
-                               hint: "Where are you going?",
-                               suffixIcon: Icon(Icons.search ,color: Colors.black,),
-
 
                              )
                            ],

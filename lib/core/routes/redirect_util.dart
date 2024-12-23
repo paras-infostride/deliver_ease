@@ -36,7 +36,7 @@ class RedirectUtil {
   static Future<String?> redirect(
       BuildContext context, GoRouterState state) async {
 
-    debugPrint("redirect for auth working");
+    debugPrint("redirect for auth working ${state.name}");
     SharedPreferences sharedPreferences =  await SharedPreferences.getInstance();
 
     bool userAuthenticated = sharedPreferences.getBool(SharedPreferencesKey.isLogin) ?? false;

@@ -1,5 +1,6 @@
 
 
+import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 
 abstract class AppRepo
@@ -17,5 +18,7 @@ abstract class AppRepo
   Future<List<UserProfile>> getListOfAllServiceProvider();
 
   Future<void> logOut();
+
+  Future<List<Predictions>> getSearchedLocations({required String searchedKey});
 
 }

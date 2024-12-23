@@ -72,8 +72,6 @@ class _AddressPickerScreenState extends State<AddressPickerScreen> {
 
    getSuggestion(String input) async {
 
-
-
     try{
       String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
       String request = '$baseURL?input=$input&key=${AppStrings.randomUID}&sessiontoken=$_sessionToken';

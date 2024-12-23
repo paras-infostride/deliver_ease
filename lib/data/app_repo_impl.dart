@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:deliver_ease/core/utils/app_strings.dart';
 import 'package:deliver_ease/core/utils/debug_logger.dart';
 import 'package:deliver_ease/domain/app_repo.dart';
+import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 import 'exceptions_string_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class AppRepoImpl implements AppRepo
@@ -138,6 +144,36 @@ class AppRepoImpl implements AppRepo
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final CollectionReference userCollection = firestore.collection(FirebaseStrings.usersCollection);
       await userCollection.doc(userId).delete();
+    }
+    catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Predictions>> getSearchedLocations({required String searchedKey})
+  async {
+    try {
+      String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request = '$baseURL?input=$searchedKey&key=${AppStrings.randomUID}&sessiontoken=${const Uuid().v4() }';
+      var response = await http.get(Uri.parse(request));
+      // var data = json.decode(response.body);
+      debuggerAdvance(tag: "statusCode ", value: response.statusCode);
+      if (response.statusCode == 200) {
+        // var receivedData = json.decode(response.body);
+        //['predictions']
+
+        PlacesResponseModel placesResponseModel = PlacesResponseModel.fromJson(json.decode(response.body));
+        prettyPrintJson(tag: "received data", response: json.decode(response.body));
+        // _placeList = receivedData;
+
+        return placesResponseModel.predictions ?? <Predictions>[];
+
+      } else {
+        debuggerAdvance(tag: "error at loading suggestion", value: "list is empty", type: DebugType.error);
+        throw 'Failed to load predictions';
+      }
+
     }
     catch (e) {
       rethrow;

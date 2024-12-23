@@ -18,20 +18,16 @@ class GoogleMapMarkerView extends ConsumerStatefulWidget {
 
 class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
 
-
   final List<Marker> _markers = <Marker>[];
-
 
   @override
   void initState() {
     super.initState();
-
   }
 
    _add() async{
 
     CustomerDashboardState customerDashboardState = ref.watch(customerDashboardProvider);
-
 
     for(int i =0 ; i < customerDashboardState.listOfUserProfile.length  ; i++)
       {
@@ -40,9 +36,7 @@ class _GoogleMapMarkerViewState extends ConsumerState<GoogleMapMarkerView> {
 
         // creating a new MARKER
         final Marker marker = Marker(
-          icon: await BitmapDescriptor.asset(
-        const ImageConfiguration(size: Size(48, 48)),   _iconRecogniserBasedOnVehicleType(userProfile.vehicleType.toString())
-    ),
+          icon: await BitmapDescriptor.asset(const ImageConfiguration(size: Size(48, 48)),   _iconRecogniserBasedOnVehicleType(userProfile.vehicleType.toString())),
           markerId: markerId,
           position: LatLng(
             userProfile.latitude!.toDouble(),

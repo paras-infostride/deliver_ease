@@ -1,6 +1,7 @@
 import 'package:deliver_ease/core/routes/redirect_util.dart';
 import 'package:deliver_ease/core/utils/google_map_address_picker.dart';
 import 'package:deliver_ease/presentation/features/authentication/otp_verify/otp_verify_screen.dart';
+import 'package:deliver_ease/presentation/features/booking/booking_screen.dart';
 import 'package:deliver_ease/presentation/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -28,11 +29,13 @@ class AppRouter {
       /// Login
       GoRoute(
         path: '/login',
-name: AppRoutesName.loginScreen,
+        name: AppRoutesName.loginScreen,
         builder: (context, state) => const LoginScreen(),
         redirect: RedirectUtil.redirect,
-      ),
+        routes: [
 
+        ]
+      ),
       ///OTP Verify
       GoRoute(
         path: '/otp-verify',
@@ -40,7 +43,7 @@ name: AppRoutesName.loginScreen,
         builder: (context, state) {
           Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
           return  OtpVerifyScreen(
-            verificationID: extra['verificationID']
+              verificationID: extra['verificationID']
           );
         },
         // redirect: RedirectUtil.redirect,
@@ -52,21 +55,41 @@ name: AppRoutesName.loginScreen,
         name: AppRoutesName.dashboardScreen,
         builder: (context, state) => const DashboardScreen(),
         redirect: RedirectUtil.redirect,
+        routes: [
+
+          /// Profile
+          GoRoute(
+            path: '/profile',
+            name: AppRoutesName.profileScreen,
+            builder: (context, state)
+            {
+              Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+              return  ProfileScreen(
+                userProfile: extra["userProfile"],
+              );
+            },
+            redirect: RedirectUtil.redirect,
+          ),
+
+          /// Booking screen
+          GoRoute(
+            path: '/booking',
+            name: AppRoutesName.bookingScreen,
+            builder: (context, state)
+            {
+              Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+              return  BookingScreen(
+                userProfile: extra["userProfile"],
+              );
+            },
+            redirect: RedirectUtil.redirect,
+          ),
+
+
+        ]
       ),
 
-      /// Profile
-      GoRoute(
-        path: '/profile',
-        name: AppRoutesName.profileScreen,
-        builder: (context, state)
-        {
-          Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
-          return  ProfileScreen(
-            userProfile: extra["userProfile"],
-          );
-        },
-        redirect: RedirectUtil.redirect,
-      ),
+
 
       /// Profile
       GoRoute(

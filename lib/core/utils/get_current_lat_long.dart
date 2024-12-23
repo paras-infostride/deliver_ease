@@ -57,7 +57,7 @@ class GetCurrentLatLongUtil {
     }
   }
 
- static Future<String?> getAddressFromLatLong(double latitude , double longitude) async {
+ static Future<String> getAddressFromLatLong(double latitude , double longitude) async {
    try {
  //     List<Placemark> addresses = await placemarkFromCoordinates(latitude, longitude);
  // debugPrint("addresses is : ${addresses}");

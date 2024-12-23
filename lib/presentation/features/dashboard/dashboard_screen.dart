@@ -100,7 +100,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               return const CircularProgressIndicator();
             } else if (dashboardScreenStateNotifier.hasMessage.isNotEmpty) {
               return Text(dashboardScreenStateNotifier.hasMessage);
-
             } else if (dashboardScreenStateNotifier.userProfile?.name == null) {
                    return  CompleteProfileView(
                      onTap: ()
@@ -112,18 +111,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                        );
                      },
                    );
-                  }
-            else if (dashboardScreenStateNotifier.userProfile?.isVerified == null || dashboardScreenStateNotifier.userProfile?.isVerified == false ) {
-                   return const NoVerifiedView();
-                  }
-            else if(dashboardScreenStateNotifier.userProfile?.isServiceProvider ?? false ){
-
-              return  const ServiceProviderDashboardView();
-            } else
-              {
-                return const CustomerDashboardView();
-              }
-          })
+                  } else if (dashboardScreenStateNotifier.userProfile?.isVerified ==
+                  null ||
+              dashboardScreenStateNotifier.userProfile?.isVerified == false) {
+            return const NoVerifiedView();
+          } else if (dashboardScreenStateNotifier
+                  .userProfile?.isServiceProvider ??
+              false) {
+            return const ServiceProviderDashboardView();
+          } else {
+            return const CustomerDashboardView();
+          }
+        })
         ),
       ),
     );
