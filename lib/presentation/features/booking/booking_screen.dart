@@ -102,7 +102,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                           _debounce?.cancel();
                         }
                         _debounce = Timer(const Duration(milliseconds: 500), () {
-                          ref.read(bookingControllerProvider.notifier).getSearchedLocations(value: value!);
+                          ref.read(bookingControllerProvider.notifier).getSearchedLocations(value: value!, isDropTextfieldActive: false);
                         });
                       }
                     },
@@ -122,7 +122,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                             _debounce?.cancel();
                           }
                         _debounce = Timer(const Duration(milliseconds: 500), () {
-                          ref.read(bookingControllerProvider.notifier).getSearchedLocations(value: value!);
+                          ref.read(bookingControllerProvider.notifier).getSearchedLocations(value: value!, isDropTextfieldActive: false);
                         });
                       }
                     },
