@@ -87,6 +87,8 @@ class AppRouter {
             redirect: RedirectUtil.redirect,
             routes: [
 
+
+
               GoRoute(
                 path: '/booking-detail',
                 name: AppRoutesName.bookingMoreDetailScreen,
@@ -95,6 +97,7 @@ class AppRouter {
                   Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
                   return  BookingMoreDetailScreen(
                     userProfile: extra["userProfile"],
+                    bookingModel: extra["bookingModel"],
                   );
                 },
                 redirect: RedirectUtil.redirect,

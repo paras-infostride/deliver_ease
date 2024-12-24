@@ -1,22 +1,25 @@
 import 'package:deliver_ease/core/utils/responsive_util.dart';
 import 'package:deliver_ease/core/utils/validator.dart';
+import 'package:deliver_ease/domain/booking/booking_model.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 import 'package:deliver_ease/presentation/common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class BookingMoreDetailScreen extends ConsumerStatefulWidget {
   final UserProfile userProfile;
-
-  const BookingMoreDetailScreen({super.key, required this.userProfile});
-
+  final BookingModel bookingModel;
+  const BookingMoreDetailScreen( {super.key, required this.userProfile, required this.bookingModel});
   @override
   ConsumerState createState() => _BookingMoreDetailScreenState();
-
 }
 
 class _BookingMoreDetailScreenState extends ConsumerState<BookingMoreDetailScreen> {
+
+
+  final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController _textEditingControllerSenderName;
   late final TextEditingController _textEditingControllerSenderPhoneNumber;
@@ -57,7 +60,6 @@ class _BookingMoreDetailScreenState extends ConsumerState<BookingMoreDetailScree
     _textEditingControllerReceiverLandmark.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -155,12 +157,20 @@ class _BookingMoreDetailScreenState extends ConsumerState<BookingMoreDetailScree
                     ),
 
                     AppButton(
-                        title: "Book",
-                        onPressed: ()
-                    {
+                      title: "Book",
+                      onPressed: () {
 
-                    },
-                    margin: const EdgeInsets.symmetric(vertical: 20),
+                        if(_formKey.currentState!.validate())
+                          {
+                            BookingModel bookingModel = BookingModel(
+                              createdAt: Timestamp.now(),
+                            );
+
+                          }
+
+
+                      },
+                      margin: const EdgeInsets.symmetric(vertical: 20),
                     ),
 
                   ],

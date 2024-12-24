@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deliver_ease/core/utils/app_strings.dart';
 import 'package:deliver_ease/core/utils/list_utility.dart';
 import 'package:deliver_ease/core/utils/responsive_util.dart';
+import 'package:deliver_ease/domain/booking/booking_model.dart';
 import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 import 'package:deliver_ease/presentation/common_components/common_components.dart';
@@ -87,10 +88,12 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             {
                   if (bookingScreenState.showLoader) {
                     return const CircularProgressIndicator();
-                  } else if(stringHasValue(bookingScreenState.hasMessage)) {
+                  }
+                  else if(stringHasValue(bookingScreenState.hasMessage)) {
                     return ErrorView(message: bookingScreenState.hasMessage);
-                  } else {
-                return Align(
+                  }
+                  else {
+                    return Align(
                   alignment: Alignment.center,
                   child: SizedBox(
                     child: Column(
@@ -224,9 +227,13 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                           flex: 3,
                         ),
                          AppButton(title: "Proceed", onPressed: () {
+                           BookingModel bookingModel = BookingModel();
+
+                           // bookingModel.senderLat =
                           context.goNamed(AppRoutesName.bookingMoreDetailScreen,
                               extra: {
-                            "userProfile" : widget.userProfile
+                               "userProfile" : widget.userProfile,
+                               "bookingModel"   : bookingModel
                           });
                         }),
                          const Spacer(),
@@ -235,7 +242,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                     ),
                   ),
                 );
-              }
+               }
             },
 
             ),

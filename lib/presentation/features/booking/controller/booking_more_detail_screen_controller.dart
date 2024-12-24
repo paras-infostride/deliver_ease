@@ -1,15 +1,19 @@
+import 'package:deliver_ease/core/global_providers.dart';
 import 'package:deliver_ease/core/utils/debug_logger.dart';
+import 'package:deliver_ease/domain/app_repo.dart';
+import 'package:deliver_ease/domain/booking/booking_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final bookingMoreDetailControllerProvider = StateNotifierProvider.autoDispose<BookingMoreDetailScreenController, BookingMoreDetailScreenState>((ref) {
-  return BookingMoreDetailScreenController();
+  AppRepo appRepo = ref.read(appRepoProvider);
+  return BookingMoreDetailScreenController(appRepo: appRepo);
 });
 
 
 class BookingMoreDetailScreenController extends StateNotifier<BookingMoreDetailScreenState> {
 
-
-  BookingMoreDetailScreenController()
+  final AppRepo appRepo;
+  BookingMoreDetailScreenController({required this.appRepo})
       : super(BookingMoreDetailScreenState(
     showLoader: false,
     hasMessage: "",
@@ -17,10 +21,11 @@ class BookingMoreDetailScreenController extends StateNotifier<BookingMoreDetailS
   ));
 
 
-    makeBooking() async {
+    makeBooking({required BookingModel bookingModel}) async {
     try {
       state =
-          state.copyWith(showLoader: true ,hasMessage: '');
+          state.copyWith(showLoader: true ,hasMessage: '', hasMessageForListener: '');
+      await appRepo.makeBooking(bookingModel: bookingModel);
       // List<HomeResItemModel> res = await ref.getContentForHomeScreen();
       // List<HomeResItemModel> res = await _repository.getContentForHomeScreen();
       state = state.copyWith(

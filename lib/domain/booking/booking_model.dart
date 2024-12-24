@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookingModel {
+  String? bookingId;
   String? senderUserId;
   String? senderName;
   String? senderAddress;
@@ -19,7 +20,9 @@ class BookingModel {
   Timestamp? updatedAt;
   String? packageType;
 
+//<editor-fold desc="Data Methods">
   BookingModel({
+    this.bookingId,
     this.senderUserId,
     this.senderName,
     this.senderAddress,
@@ -44,6 +47,7 @@ class BookingModel {
       identical(this, other) ||
       (other is BookingModel &&
           runtimeType == other.runtimeType &&
+          bookingId == other.bookingId &&
           senderUserId == other.senderUserId &&
           senderName == other.senderName &&
           senderAddress == other.senderAddress &&
@@ -64,6 +68,7 @@ class BookingModel {
 
   @override
   int get hashCode =>
+      bookingId.hashCode ^
       senderUserId.hashCode ^
       senderName.hashCode ^
       senderAddress.hashCode ^
@@ -85,6 +90,7 @@ class BookingModel {
   @override
   String toString() {
     return 'BookingModel{' +
+        ' bookingId: $bookingId,' +
         ' senderUserId: $senderUserId,' +
         ' senderName: $senderName,' +
         ' senderAddress: $senderAddress,' +
@@ -106,6 +112,7 @@ class BookingModel {
   }
 
   BookingModel copyWith({
+    String? bookingId,
     String? senderUserId,
     String? senderName,
     String? senderAddress,
@@ -125,6 +132,7 @@ class BookingModel {
     String? packageType,
   }) {
     return BookingModel(
+      bookingId: bookingId ?? this.bookingId,
       senderUserId: senderUserId ?? this.senderUserId,
       senderName: senderName ?? this.senderName,
       senderAddress: senderAddress ?? this.senderAddress,
@@ -146,6 +154,7 @@ class BookingModel {
   }
 
   BookingModel.fromJson(Map<String, dynamic> json) {
+    bookingId = json['booking_id'];
     senderUserId = json['sender_user_id'];
     senderName = json['sender_name'];
     senderAddress = json['sender_address'];
@@ -166,24 +175,27 @@ class BookingModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['sender_user_id'] = senderUserId;
-    data['sender_name'] = senderName;
-    data['sender_address'] = senderAddress;
-    data['sender_phone_number'] = senderPhoneNumber;
-    data['sender_landmark'] = senderLandmark;
-    data['sender_lat'] = senderLat;
-    data['sender_lng'] = senderLng;
-    data['receiver_user_id'] = receiverUserId;
-    data['receiver_name'] = receiverName;
-    data['receiver_address'] = receiverAddress;
-    data['receiver_phone_number'] = receiverPhoneNumber;
-    data['receiver_landmark'] = receiverLandmark;
-    data['receiver_lat'] = receiverLat;
-    data['receiver_lng'] = receiverLng;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['package_type'] = packageType;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['booking_id'] = this.bookingId;
+    data['sender_user_id'] = this.senderUserId;
+    data['sender_name'] = this.senderName;
+    data['sender_address'] = this.senderAddress;
+    data['sender_phone_number'] = this.senderPhoneNumber;
+    data['sender_landmark'] = this.senderLandmark;
+    data['sender_lat'] = this.senderLat;
+    data['sender_lng'] = this.senderLng;
+    data['receiver_user_id'] = this.receiverUserId;
+    data['receiver_name'] = this.receiverName;
+    data['receiver_address'] = this.receiverAddress;
+    data['receiver_phone_number'] = this.receiverPhoneNumber;
+    data['receiver_landmark'] = this.receiverLandmark;
+    data['receiver_lat'] = this.receiverLat;
+    data['receiver_lng'] = this.receiverLng;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['package_type'] = this.packageType;
     return data;
   }
+
+//</editor-fold>
 }

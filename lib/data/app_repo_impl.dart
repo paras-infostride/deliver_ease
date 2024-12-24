@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:deliver_ease/core/utils/app_strings.dart';
 import 'package:deliver_ease/core/utils/debug_logger.dart';
 import 'package:deliver_ease/domain/app_repo.dart';
+import 'package:deliver_ease/domain/booking/booking_model.dart';
 import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
 import 'package:deliver_ease/domain/user_profile/user_profile.dart';
 
@@ -45,7 +46,6 @@ class AppRepoImpl implements AppRepo
       rethrow;
     }
   }
-
 
   @override
   Future<bool> checkUserExist(String userID) async {
@@ -174,6 +174,34 @@ class AppRepoImpl implements AppRepo
         throw 'Failed to load predictions';
       }
 
+    }
+    catch (e) {
+      rethrow;
+    }
+  }
+
+
+  @override
+  Future<void> makeBooking({required BookingModel bookingModel}) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference collection = firestore.collection(FirebaseStrings.bookingCollection);
+
+      DocumentReference documentReferencer = collection.doc();
+
+      await documentReferencer
+          .set(bookingModel.toJson())
+          .whenComplete(()
+      {
+        return Future.value(null);
+      })
+          .catchError((e)
+      {
+        debuggerAdvance(tag: "error at createUserIdentity", value: e.toString());
+
+        throw e.toString();
+
+      });
     }
     catch (e) {
       rethrow;
