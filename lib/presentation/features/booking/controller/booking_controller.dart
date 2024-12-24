@@ -6,6 +6,7 @@ import 'package:deliver_ease/domain/goole_places/google_places_res_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 final bookingControllerProvider = StateNotifierProvider.autoDispose<BookingScreenController, BookingScreenState>((ref) {
   AppRepo appRepo = ref.read(appRepoProvider);
   return BookingScreenController(
@@ -18,6 +19,7 @@ class BookingScreenController extends StateNotifier<BookingScreenState> {
 
   BookingScreenController({required this.appRepo})
       : super(BookingScreenState(
+      showLoadingTextForPlacesSuggestion: false,
       showLoader: true , hasMessage :  '' ,
       dropLatLng: null, pickUpLatLng: null,
       dropTextfieldActive: true,
@@ -50,31 +52,36 @@ class BookingScreenController extends StateNotifier<BookingScreenState> {
   getSearchedLocations({ required String value , required bool isDropTextfieldActive}) async {
     try {
        state =
-          state.copyWith(hasMessageForListener :  '', hasMessage: '' ,dropTextfieldActive: isDropTextfieldActive);
+          state.copyWith( showLoadingTextForPlacesSuggestion: true ,hasMessageForListener :  '', hasMessage: '' ,dropTextfieldActive: isDropTextfieldActive);
        List<Predictions>  listOfPredictions =  await appRepo.getSearchedLocations(searchedKey: value);
        state = state.copyWith(
-         showLoader: false,
+           showLoadingTextForPlacesSuggestion: false,
          listOfPlaces: listOfPredictions
        );
 
     }
     catch (e) {
-      debuggerAdvance(tag: "At catch getCurrentLocation", value: e.runtimeType , type: DebugType.error);
-      state = state.copyWith( hasMessage: e.toString());
+      debuggerAdvance(tag: "At catch getSearchedLocations", value: e.runtimeType , type: DebugType.error);
+      state = state.copyWith(  showLoadingTextForPlacesSuggestion: false, hasMessageForListener: e.toString());
     }
   }
 
   onTapOnAnyLocation()
   {
+
+
     state = state.copyWith(
       listOfPlaces:  [],
 
     );
   }
 
+
 }
 
 class BookingScreenState {
+
+   bool showLoadingTextForPlacesSuggestion;
 
    bool showLoader = false;
    String hasMessage = "";
@@ -92,6 +99,7 @@ class BookingScreenState {
 
    //<editor-fold desc="Data Methods">
   BookingScreenState({
+    required this.showLoadingTextForPlacesSuggestion,
     required this.showLoader,
     required this.hasMessage,
     required this.hasMessageForListener,
@@ -108,6 +116,8 @@ class BookingScreenState {
       identical(this, other) ||
       (other is BookingScreenState &&
           runtimeType == other.runtimeType &&
+          showLoadingTextForPlacesSuggestion ==
+              other.showLoadingTextForPlacesSuggestion &&
           showLoader == other.showLoader &&
           hasMessage == other.hasMessage &&
           hasMessageForListener == other.hasMessageForListener &&
@@ -120,6 +130,7 @@ class BookingScreenState {
 
   @override
   int get hashCode =>
+      showLoadingTextForPlacesSuggestion.hashCode ^
       showLoader.hashCode ^
       hasMessage.hashCode ^
       hasMessageForListener.hashCode ^
@@ -133,6 +144,7 @@ class BookingScreenState {
   @override
   String toString() {
     return 'BookingScreenState{' +
+        ' showLoadingTextForPlacesSuggestion: $showLoadingTextForPlacesSuggestion,' +
         ' showLoader: $showLoader,' +
         ' hasMessage: $hasMessage,' +
         ' hasMessageForListener: $hasMessageForListener,' +
@@ -146,6 +158,7 @@ class BookingScreenState {
   }
 
   BookingScreenState copyWith({
+    bool? showLoadingTextForPlacesSuggestion,
     bool? showLoader,
     String? hasMessage,
     String? hasMessageForListener,
@@ -157,6 +170,8 @@ class BookingScreenState {
     bool? dropTextfieldActive,
   }) {
     return BookingScreenState(
+      showLoadingTextForPlacesSuggestion: showLoadingTextForPlacesSuggestion ??
+          this.showLoadingTextForPlacesSuggestion,
       showLoader: showLoader ?? this.showLoader,
       hasMessage: hasMessage ?? this.hasMessage,
       hasMessageForListener:
@@ -172,6 +187,8 @@ class BookingScreenState {
 
   Map<String, dynamic> toMap() {
     return {
+      'showLoadingTextForPlacesSuggestion':
+          this.showLoadingTextForPlacesSuggestion,
       'showLoader': this.showLoader,
       'hasMessage': this.hasMessage,
       'hasMessageForListener': this.hasMessageForListener,
@@ -186,6 +203,8 @@ class BookingScreenState {
 
   factory BookingScreenState.fromMap(Map<String, dynamic> map) {
     return BookingScreenState(
+      showLoadingTextForPlacesSuggestion:
+          map['showLoadingTextForPlacesSuggestion'] as bool,
       showLoader: map['showLoader'] as bool,
       hasMessage: map['hasMessage'] as String,
       hasMessageForListener: map['hasMessageForListener'] as String,

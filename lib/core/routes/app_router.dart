@@ -1,6 +1,7 @@
 import 'package:deliver_ease/core/routes/redirect_util.dart';
 import 'package:deliver_ease/core/utils/google_map_address_picker.dart';
 import 'package:deliver_ease/presentation/features/authentication/otp_verify/otp_verify_screen.dart';
+import 'package:deliver_ease/presentation/features/booking/booking_more_detail_screen.dart';
 import 'package:deliver_ease/presentation/features/booking/booking_screen.dart';
 import 'package:deliver_ease/presentation/features/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class AppRouter {
 
         ]
       ),
+
       ///OTP Verify
       GoRoute(
         path: '/otp-verify',
@@ -83,6 +85,22 @@ class AppRouter {
               );
             },
             redirect: RedirectUtil.redirect,
+            routes: [
+
+              GoRoute(
+                path: '/booking-detail',
+                name: AppRoutesName.bookingMoreDetailScreen,
+                builder: (context, state)
+                {
+                  Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+                  return  BookingMoreDetailScreen(
+                    userProfile: extra["userProfile"],
+                  );
+                },
+                redirect: RedirectUtil.redirect,
+
+              ),
+            ]
           ),
 
 

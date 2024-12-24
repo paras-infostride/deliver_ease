@@ -1,0 +1,24 @@
+{
+
+  "sender_user_id" : "",
+  "sender_name" : "",
+  "sender_address" : "",
+  "sender_phone_number": "",
+  "sender_landmark": "",
+  "sender_lat" :"",
+  "sender_lng" :"",
+
+  "receiver_user_id" : "",
+  "receiver_name" : "",
+  "receiver_address" : "",
+  "receiver_phone_number": "",
+  "receiver_landmark": "",
+  "receiver_lat" :"",
+  "receiver_lng" :"",
+
+  "created_at" : "",
+  "updated_at" : "",
+
+  "package_type" : ""
+
+}
